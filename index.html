@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- TÍTULO DE LA PESTAÑA DEL NAVEGADOR -->
+    <title>StreamLoot - Cuentas Gratis y VIP</title>
+    
+    <!-- ÍCONO DE LA PESTAÑA DEL NAVEGADOR (FAVICON) -->
+    <link id="favicon" rel="icon" type="image/png" href="imgg.png">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased flex flex-col justify-between">
+
+    <!-- Header / Navbar con Logo e Imagen -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <!-- LOGO E IDENTIDAD DEL SITIO -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('free')">
+                <div class="bg-slate-800 p-1.5 rounded-xl border border-slate-700/60 shadow-md shadow-indigo-500/10 flex items-center justify-center">
+                    <img id="siteLogo" 
+                         src="imgg.png" 
+                         alt="Logo StreamRewards" 
+                         class="w-7 h-7 object-contain">
+                </div>
+                
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-base sm:text-lg bg-gradient-to-r from-indigo-400 via-purple-300 to-amber-300 bg-clip-text text-transparent leading-none">
+                        StreamLoot
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium tracking-wide">Gratis & Tienda VIP</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <!-- Botón Comunidad WhatsApp -->
+                <a href="https://whatsapp.com/channel/0029VbDti5mCnA80Ya4h5i47" target="_blank" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl flex items-center gap-1.5 font-semibold transition shadow-md shadow-emerald-600/20">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> <span class="hidden sm:inline">GRUPO OFICIAL (FREE)</span>
+                </a>
+
+                <button onclick="toggleAdminModal()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-2 transition">
+                    <i class="fa-solid fa-user-gear"></i> Panel Admin
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navegación entre Secciones: Gratis vs VIP -->
+    <div class="bg-slate-900/80 border-b border-slate-800 py-3">
+        <div class="max-w-6xl mx-auto px-4 flex justify-center space-x-3">
+            <button id="tabBtnFree" onclick="switchTab('free')" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-indigo-600 text-white shadow-lg shadow-indigo-600/20">
+                <i class="fa-solid fa-gift"></i> Sección Gratis (Sponsors)
+            </button>
+            <button id="tabBtnVip" onclick="switchTab('vip')" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white">
+                <i class="fa-solid fa-crown text-amber-400"></i> Tienda VIP (Comprar Cuentas)
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-6xl mx-auto px-4 py-8 w-full flex-grow">
+        
+        <!-- SECCIÓN GRATIS -->
+        <div id="sectionFree">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/60 border border-indigo-800/40 px-3 py-1 rounded-full">Premios Diarios</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-2">Desbloquea Cuentas Premium Gratis</h1>
+                <p class="text-slate-400 text-sm sm:text-base">Haz clic en los 3 anuncios por 5 segundos para verificar que eres humano y reclamar tu cuenta. ¡El primero en completarlo se la lleva!</p>
+            </div>
+
+            <!-- Grid Cuentas Gratis -->
+            <div id="accountsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Cuentas renderizadas dinámicamente -->
+            </div>
+        </div>
+
+        <!-- SECCIÓN VIP (TIENDA) -->
+        <div id="sectionVip" class="hidden">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-xs font-semibold uppercase tracking-wider text-amber-400 bg-amber-950/60 border border-amber-800/40 px-3 py-1 rounded-full flex items-center justify-center w-fit mx-auto gap-1">
+                    <i class="fa-solid fa-bolt"></i> Entrega Inmediata Garantizada
+                </span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-2">Tienda VIP - Cuentas Completas y Perfiles Privados</h1>
+                <p class="text-slate-400 text-sm sm:text-base">Sin esperar ni ver anuncios. Compra cuentas completas o perfiles individuales con garantía total y soporte directo por WhatsApp.</p>
+            </div>
+
+            <!-- Grid Cuentas VIP -->
+            <div id="vipAccountsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Cuentas VIP renderizadas dinámicamente -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        <p>© 2026 StreamLoot - Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Modal de Proceso Gratis / Recompensas -->
+    <div id="rewardModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="glass-card max-w-md w-full rounded-2xl p-6 relative border border-slate-700">
+            <button onclick="closeRewardModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Compra VIP (Pagos & Yape/QR) -->
+    <div id="vipBuyModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="glass-card max-w-md w-full rounded-2xl p-6 relative border border-slate-700 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeVipBuyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="vipBuyContent"></div>
+        </div>
+    </div>
+
+    <!-- Modal Admin -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="glass-card max-w-lg w-full rounded-2xl p-6 relative border border-slate-700 max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <!-- Login Admin -->
+            <div id="adminLogin" class="space-y-4">
+                <div class="text-center">
+                    <i class="fa-solid fa-lock text-3xl text-indigo-400 mb-2"></i>
+                    <h2 class="text-lg font-bold text-white">Acceso Administrador</h2>
+                    <p class="text-xs text-slate-400">Ingresa tu PIN</p>
+                </div>
+                <input type="password" id="adminPinInput" placeholder="Ingresa el PIN" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-center text-white focus:outline-none focus:border-indigo-500 font-mono tracking-widest text-lg">
+                <button onclick="verifyAdminPin()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl text-sm transition">
+                    Ingresar
+                </button>
+            </div>
+
+            <!-- Panel Control Admin -->
+            <div id="adminPanel" class="hidden space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                    <h2 class="text-lg font-bold text-white">Panel de Gestión</h2>
+                    <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30">Socios Activos</span>
+                </div>
+
+                <!-- Configuración de Pagos VIP (Socio 1 & Socio 2) -->
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl space-y-3 text-xs">
+                    <h3 class="font-bold text-amber-400 flex items-center gap-1.5 text-sm">
+                        <i class="fa-solid fa-users"></i> Configuración de Pagos de los Socios
+                    </h3>
+
+                    <!-- DATOS SOCIO 1 -->
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-2">
+                        <span class="font-bold text-indigo-400 block border-b border-slate-800 pb-1">👤 Configuración Socio 1</span>
+                        <div>
+                            <label class="text-slate-400">Nombre del Socio 1</label>
+                            <input type="text" id="adminPartner1Name" placeholder="Socio 1" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-slate-400">WhatsApp Socio 1 (con código de país, ej: 51900112233)</label>
+                            <input type="text" id="adminPartner1Wp" placeholder="51900000000" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-slate-400">Yape / Plin Socio 1</label>
+                            <input type="text" id="adminPartner1Yape" placeholder="900000000 (Titular: Juan Perez)" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-slate-400">Cuentas Bancarias Socio 1</label>
+                            <input type="text" id="adminPartner1Bank" placeholder="BCP: 191-xxxx / CCI: 002-xxxx" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-slate-400 block mb-1">Imagen QR Socio 1 (Subir desde Galería o pegar URL)</label>
+                            <input type="file" id="adminPartner1QrFile" accept="image/*" onchange="uploadQrImage(1)" class="w-full text-slate-400 text-[10px] file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-[10px] file:bg-slate-800 file:text-indigo-400 hover:file:bg-slate-700 mb-1">
+                            <input type="text" id="adminPartner1Qr" placeholder="https://misitio.com/qr1.png" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white text-[11px]">
+                        </div>
+                    </div>
+
+                    <!-- DATOS SOCIO 2 -->
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-2">
+                        <span class="font-bold text-amber-400 block border-b border-slate-800 pb-1">👤 Configuración Socio 2</span>
+                        <div>
+                            <label class="text-slate-400">Nombre del Socio 2</label>
+                            <input type="text" id="adminPartner2Name" placeholder="Socio 2" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-slate-400">WhatsApp Socio 2 (con código de país, ej: 51900112233)</label>
+                            <input type="text" id="adminPartner2Wp" placeholder="51911223344" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-slate-400">Yape / Plin Socio 2</label>
+                            <input type="text" id="adminPartner2Yape" placeholder="911223344 (Titular: Carlos Lopez)" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-slate-400">Cuentas Bancarias Socio 2</label>
+                            <input type="text" id="adminPartner2Bank" placeholder="BBVA: 0011-xxxx / CCI: 011-xxxx" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-slate-400 block mb-1">Imagen QR Socio 2 (Subir desde Galería o pegar URL)</label>
+                            <input type="file" id="adminPartner2QrFile" accept="image/*" onchange="uploadQrImage(2)" class="w-full text-slate-400 text-[10px] file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-[10px] file:bg-slate-800 file:text-amber-400 hover:file:bg-slate-700 mb-1">
+                            <input type="text" id="adminPartner2Qr" placeholder="https://misitio.com/qr2.png" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white text-[11px]">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestión de Producto -->
+                <div class="space-y-3 pt-2">
+                    <h3 class="font-bold text-slate-200 text-sm border-b border-slate-800 pb-1">Editar Cuentas (Gratis & VIP)</h3>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-300 block mb-1">Seleccionar Plataforma</label>
+                        <select id="adminSelectPlatform" onchange="onAdminPlatformChange()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                            <!-- Opciones JS -->
+                        </select>
+                    </div>
+
+                    <!-- Configuración Sección Gratis vs VIP -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-xs font-semibold text-slate-300 block mb-1">Estado en Sección VIP</label>
+                            <select id="adminVipStatus" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-amber-500">
+                                <option value="available">Disponible en Tienda VIP</option>
+                                <option value="coming_soon">Muy Pronto (Sin Stock)</option>
+                                <option value="disabled">Desactivar de VIP</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-300 block mb-1">Modalidad VIP</label>
+                            <select id="adminVipMode" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-amber-500">
+                                <option value="Perfil Privado">Perfil Privado / Pantalla</option>
+                                <option value="Cuenta Completa">Cuenta Completa Privada</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-semibold text-slate-300 block mb-1">Precio VIP (Ej: S/ 12.00 o $3.50)</label>
+                        <input type="text" id="adminVipPrice" placeholder="S/ 10.00" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-amber-500 font-bold text-amber-400">
+                    </div>
+
+                    <div class="border-t border-slate-800 pt-3">
+                        <span class="text-xs font-bold text-indigo-400 block mb-2">Datos para Sección GRATIS (Sponsors)</span>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-300 block mb-1">Tipo de Entrega Gratis</label>
+                            <select id="adminTypeSelect" onchange="toggleAdminTypeFields()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                                <option value="full">Cuenta Completa (Email + Contraseña)</option>
+                                <option value="code">Solo Email + Enlace de Código TV / Acceso</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="text-xs font-semibold text-slate-300 block mb-1">Email / Usuario (Gratis)</label>
+                            <input type="text" id="adminNewEmail" placeholder="usuario@correo.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                        </div>
+
+                        <div id="adminPassContainer" class="mt-2">
+                            <label class="text-xs font-semibold text-slate-300 block mb-1">Contraseña (Gratis)</label>
+                            <input type="text" id="adminNewPass" placeholder="ClaveSegura123" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                        </div>
+
+                        <div id="adminLinkContainer" class="hidden mt-2">
+                            <label class="text-xs font-semibold text-slate-300 block mb-1">Enlace para Código TV (Gratis)</label>
+                            <input type="text" id="adminCodeLink" placeholder="https://misitio.com/obtener-codigo" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 pt-3">
+                        <button onclick="clearCurrentAccount()" class="w-1/3 bg-rose-900/40 hover:bg-rose-800/60 text-rose-300 border border-rose-700/50 font-semibold text-xs py-2.5 rounded-lg transition">
+                            Borrar Datos Gratis
+                        </button>
+                        <button onclick="saveAccountChanges()" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded-lg transition shadow-lg shadow-emerald-600/20">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Principal de Lógica -->
+    <script>
+        // =========================================================================
+        // PIN DE ADMINISTRADOR (Cámbialo manualmente aquí en el código fuente)
+        // =========================================================================
+        const ADMIN_PIN_CODE = "2112026"; 
+
+        // Configuración Global de Pagos (Socios 1 y 2)
+        let partnersConfig = JSON.parse(localStorage.getItem('stream_partners_config_v1')) || {
+            partner1: {
+                name: 'ANDY ATOCHE',
+                wpPhone: '+51 945240055',
+                yapeNum: '+51 945240055 (Titular: Andy Atche)',
+                bankDetails: 'BCP: 191-XXXXXXXX-0-XX',
+                qrImage: 'https://cdn-icons-png.flaticon.com/512/1179/1179069.png'
+            },
+            partner2: {
+                name: 'ALVARO FERRER',
+                wpPhone: '+51 903374617',
+                yapeNum: '+5 1903374617 (Titular: Alvaro Ferrer)',
+                bankDetails: 'BBVA: 0011-XXXXXXXX-XX',
+                qrImage: 'https://cdn-icons-png.flaticon.com/512/1179/1179069.png'
+            }
+        };
+
+        // Lista Completa de Plataformas (Gratis & VIP)
+        const defaultAccounts = [
+            { id: 'netflix', name: 'Netflix Premium', icon: 'fa-film', color: 'bg-red-600', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 12.00', vipMode: 'Perfil Privado' },
+            { id: 'disney', name: 'Disney+ Standard', icon: 'fa-wand-magic-sparkles', color: 'bg-blue-600', type: 'code', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 10.00', vipMode: 'Perfil Privado' },
+            { id: 'max', name: 'Max (HBO)', icon: 'fa-tv', color: 'bg-purple-600', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 8.00', vipMode: 'Perfil Privado' },
+            { id: 'spotify', name: 'Spotify Premium', icon: 'fa-music', color: 'bg-emerald-600', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 9.00', vipMode: 'Cuenta Completa' },
+            { id: 'appletv', name: 'Apple TV+', icon: 'fa-apple', color: 'bg-slate-700', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'coming_soon', vipPrice: 'S/ 7.00', vipMode: 'Cuenta Completa' },
+            { id: 'prime', name: 'Prime Video', icon: 'fa-video', color: 'bg-sky-600', type: 'code', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 8.00', vipMode: 'Perfil Privado' },
+            { id: 'crunchyroll', name: 'Crunchyroll Mega Fan', icon: 'fa-ghost', color: 'bg-orange-500', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'coming_soon', vipPrice: 'S/ 6.00', vipMode: 'Cuenta Completa' },
+            { id: 'paramount', name: 'Paramount+', icon: 'fa-mountain', color: 'bg-blue-800', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'coming_soon', vipPrice: 'S/ 6.00', vipMode: 'Perfil Privado' },
+            { id: 'youtube', name: 'YouTube Premium', icon: 'fa-play', color: 'bg-red-500', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 7.00', vipMode: 'Cuenta Completa' },
+            { id: 'deezer', name: 'Deezer Premium', icon: 'fa-compact-disc', color: 'bg-pink-600', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'coming_soon', vipPrice: 'S/ 5.00', vipMode: 'Cuenta Completa' },
+            { id: 'starplus', name: 'Star+', icon: 'fa-star', color: 'bg-amber-600', type: 'code', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'disabled', vipPrice: 'S/ 8.00', vipMode: 'Perfil Privado' }
+        ];
+
+        let accounts = JSON.parse(localStorage.getItem('stream_accounts_v6')) || defaultAccounts;
+        let selectedAccId = null;
+        let activeVipPartner = 'partner1';
+        let currentStep = 0;
+        let adSeconds = 5;
+
+        // Cargar App
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAccountsGrid();
+            renderVipAccountsGrid();
+            populateAdminDropdown();
+        });
+
+        function saveToStorage() {
+            localStorage.setItem('stream_accounts_v6', JSON.stringify(accounts));
+            localStorage.setItem('stream_partners_config_v1', JSON.stringify(partnersConfig));
+        }
+
+        // Cambio de Pestañas (Gratis vs VIP)
+        function switchTab(tab) {
+            const secFree = document.getElementById('sectionFree');
+            const secVip = document.getElementById('sectionVip');
+            const btnFree = document.getElementById('tabBtnFree');
+            const btnVip = document.getElementById('tabBtnVip');
+
+            if (tab === 'free') {
+                secFree.classList.remove('hidden');
+                secVip.classList.add('hidden');
+                
+                btnFree.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-indigo-600 text-white shadow-lg shadow-indigo-600/20";
+                btnVip.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white";
+            } else {
+                secFree.classList.add('hidden');
+                secVip.classList.remove('hidden');
+
+                btnVip.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20";
+                btnFree.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white";
+            }
+        }
+
+        function isAccountReady(acc) {
+            if (!acc.email || acc.email.trim() === '') return false;
+            if (acc.type === 'full' && (!acc.pass || acc.pass.trim() === '')) return false;
+            if (acc.type === 'code' && (!acc.codeLink || acc.codeLink.trim() === '')) return false;
+            return true;
+        }
+
+        // Renderizar Cuentas Gratis
+        function renderAccountsGrid() {
+            const grid = document.getElementById('accountsGrid');
+            grid.innerHTML = '';
+
+            accounts.forEach(acc => {
+                const card = document.createElement('div');
+                card.className = `glass-card p-5 rounded-2xl flex flex-col justify-between hover:border-slate-500 transition duration-300`;
+                const typeLabel = acc.type === 'code' ? 'Solo Código / TV' : 'Cuenta Completa';
+                
+                const ready = isAccountReady(acc);
+                let statusBadge = '';
+                let btnHtml = '';
+
+                if (!ready) {
+                    statusBadge = `
+                        <span class="text-xs text-amber-400 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-amber-400 mr-1.5"></span>
+                            Pendiente
+                        </span>`;
+                    btnHtml = `
+                        <button disabled class="w-full bg-slate-800/60 text-slate-500 cursor-not-allowed font-semibold py-2 rounded-xl text-xs">
+                            Esperando Cuenta
+                        </button>`;
+                } else if (acc.claimed) {
+                    statusBadge = `
+                        <span class="text-xs text-rose-400 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-rose-400 mr-1.5"></span>
+                            Agotada
+                        </span>`;
+                    btnHtml = `
+                        <button onclick="selectAccount('${acc.id}')" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2 rounded-xl text-xs transition">
+                            Ver Estado
+                        </button>`;
+                } else {
+                    statusBadge = `
+                        <span class="text-xs text-emerald-400 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
+                            Disponible
+                        </span>`;
+                    btnHtml = `
+                        <button onclick="selectAccount('${acc.id}')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 rounded-xl text-xs transition shadow-md shadow-indigo-600/20">
+                            Obtener Cuenta
+                        </button>`;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="${acc.color} w-10 h-10 rounded-xl flex items-center justify-center text-white">
+                            <i class="fa-solid ${acc.icon}"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white text-base">${acc.name}</h3>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                ${statusBadge}
+                                <span class="text-[10px] bg-slate-800 text-slate-400 border border-slate-700 px-1.5 py-0.5 rounded font-mono">${typeLabel}</span>
+                            </div>
+                        </div>
+                    </div>
+                    ${btnHtml}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Renderizar Cuentas VIP
+        function renderVipAccountsGrid() {
+            const grid = document.getElementById('vipAccountsGrid');
+            grid.innerHTML = '';
+
+            accounts.forEach(acc => {
+                if (acc.vipStatus === 'disabled') return;
+
+                const card = document.createElement('div');
+                card.className = `glass-card p-5 rounded-2xl flex flex-col justify-between hover:border-amber-500/50 transition duration-300 border-amber-500/10`;
+
+                let statusHtml = '';
+                let btnHtml = '';
+
+                if (acc.vipStatus === 'available') {
+                    statusHtml = `
+                        <span class="text-xs text-emerald-400 font-semibold flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
+                            Stock Disponible
+                        </span>`;
+                    btnHtml = `
+                        <button onclick="openVipBuyModal('${acc.id}')" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold py-2.5 rounded-xl text-xs transition shadow-md shadow-amber-500/20 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cart-shopping"></i> Comprar Ahora (${acc.vipPrice})
+                        </button>`;
+                } else {
+                    statusHtml = `
+                        <span class="text-xs text-amber-400 font-semibold flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-amber-400 mr-1.5"></span>
+                            Muy Pronto
+                        </span>`;
+                    btnHtml = `
+                        <button disabled class="w-full bg-slate-800/80 text-slate-500 cursor-not-allowed font-semibold py-2.5 rounded-xl text-xs">
+                            Próximamente en Stock
+                        </button>`;
+                }
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="${acc.color} w-10 h-10 rounded-xl flex items-center justify-center text-white">
+                                    <i class="fa-solid ${acc.icon}"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-white text-base">${acc.name}</h3>
+                                    <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded font-semibold">${acc.vipMode}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between my-3 bg-slate-900/60 border border-slate-800 p-2.5 rounded-xl">
+                            <div>
+                                <span class="text-[10px] text-slate-400 block">Precio VIP</span>
+                                <span class="text-lg font-black text-amber-400 font-mono">${acc.vipPrice}</span>
+                            </div>
+                            <div class="text-right">
+                                ${statusHtml}
+                            </div>
+                        </div>
+                    </div>
+                    ${btnHtml}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // MODAL DE COMPRA VIP (CON SELECCIÓN DE SOCIO 1 Y SOCIO 2)
+        function openVipBuyModal(accId) {
+            selectedAccId = accId;
+            activeVipPartner = 'partner1'; // defecto
+            renderVipModalContent();
+            
+            const modal = document.getElementById('vipBuyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function switchVipPartner(partnerKey) {
+            activeVipPartner = partnerKey;
+            renderVipModalContent();
+        }
+
+        function renderVipModalContent() {
+            const acc = accounts.find(a => a.id === selectedAccId);
+            if (!acc) return;
+
+            const pData = partnersConfig[activeVipPartner] || partnersConfig.partner1;
+            const container = document.getElementById('vipBuyContent');
+
+            const wpText = encodeURIComponent(`Hola ${pData.name}! Acabo de hacer el pago para la cuenta VIP de *${acc.name}* (${acc.vipMode}) por el precio de *${acc.vipPrice}*. Adjunto mi comprobante y número de operación para recibir los accesos.`);
+            const wpUrl = `https://wa.me/${pData.wpPhone}?text=${wpText}`;
+
+            const isP1 = activeVipPartner === 'partner1';
+            const isP2 = activeVipPartner === 'partner2';
+
+            container.innerHTML = `
+                <div class="text-center space-y-4">
+                    <div class="inline-flex items-center gap-2 bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold">
+                        <i class="fa-solid fa-crown"></i> Compra VIP Directa
+                    </div>
+                    
+                    <div>
+                        <h2 class="text-xl font-bold text-white">${acc.name}</h2>
+                        <p class="text-xs text-slate-400 font-mono">Modalidad: ${acc.vipMode} | Precio: <strong class="text-amber-400">${acc.vipPrice}</strong></p>
+                    </div>
+
+                    <!-- SELECTOR DE SOCIO 1 O SOCIO 2 -->
+                    <div class="space-y-1.5">
+                        <span class="text-[11px] font-bold text-slate-300 block">Selecciona el Socio a pagar:</span>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="switchVipPartner('partner1')" class="py-2 px-3 rounded-xl font-bold text-xs border transition ${isP1 ? 'bg-indigo-600 border-indigo-500 text-white shadow-md shadow-indigo-600/30' : 'bg-slate-900 border-slate-700 text-slate-400 hover:text-white'}">
+                                👤 ${partnersConfig.partner1.name || 'Socio 1'}
+                            </button>
+                            <button onclick="switchVipPartner('partner2')" class="py-2 px-3 rounded-xl font-bold text-xs border transition ${isP2 ? 'bg-amber-500 border-amber-400 text-slate-950 shadow-md shadow-amber-500/30' : 'bg-slate-900 border-slate-700 text-slate-400 hover:text-white'}">
+                                👤 ${partnersConfig.partner2.name || 'Socio 2'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Código QR e instrucciones de Pago -->
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-3">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                            <span class="text-xs font-bold text-slate-300">Paso 1: Paga a ${pData.name}</span>
+                            <span class="text-[10px] text-amber-400 font-semibold">QR / Yape / Plin</span>
+                        </div>
+                        
+                        <div class="flex justify-center my-2">
+                            <img src="${pData.qrImage}" alt="QR de Pago" class="w-44 h-44 object-contain rounded-xl border border-slate-700 bg-white p-1 shadow-lg">
+                        </div>
+
+                        <div class="text-left text-xs space-y-1.5 bg-slate-950 p-3 rounded-lg border border-slate-800">
+                            <div>
+                                <span class="text-slate-400 block text-[10px]">Yape / Plin / Teléfono:</span>
+                                <span class="font-mono text-emerald-400 font-bold select-all">${pData.yapeNum}</span>
+                            </div>
+                            <div class="pt-1.5 border-t border-slate-900">
+                                <span class="text-slate-400 block text-[10px]">Cuentas Bancarias / CCI:</span>
+                                <span class="font-mono text-slate-200 select-all">${pData.bankDetails}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paso 2: Enviar Comprobante -->
+                    <div class="space-y-2">
+                        <span class="text-xs font-bold text-slate-300 block">Paso 2: Enviar Comprobante a ${pData.name}</span>
+                        <a href="${wpUrl}" target="_blank" class="block w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3 rounded-xl text-xs transition shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Enviar Comprobante a ${pData.name}
+                        </a>
+                        <p class="text-[10px] text-slate-400">Verificaremos el número de operación al instante y te entregaremos tu cuenta.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeVipBuyModal() {
+            document.getElementById('vipBuyModal').classList.add('hidden');
+            document.getElementById('vipBuyModal').classList.remove('flex');
+        }
+
+        // Selección de Cuenta Gratis y Modal
+        function selectAccount(id) {
+            selectedAccId = id;
+            currentStep = 0;
+            const acc = accounts.find(a => a.id === id);
+
+            if (acc.claimed) {
+                showClaimedModal(acc);
+            } else {
+                showStepModal(acc);
+            }
+            document.getElementById('rewardModal').classList.remove('hidden');
+            document.getElementById('rewardModal').classList.add('flex');
+        }
+
+        function showStepModal(acc) {
+            const container = document.getElementById('modalContent');
+            container.innerHTML = `
+                <div class="text-center space-y-4">
+                    <div class="${acc.color} w-14 h-14 rounded-2xl flex items-center justify-center text-white mx-auto text-2xl shadow-lg">
+                        <i class="fa-solid ${acc.icon}"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-white">Reclamar ${acc.name}</h2>
+                    <p class="text-xs text-slate-400">Completa la verificación viendo los 3 anuncios sponsor para desbloquear los accesos.</p>
+                    
+                    <!-- Pasos Progreso -->
+                    <div class="flex justify-center items-center space-x-2 my-4">
+                        <div id="step1" class="w-8 h-8 rounded-full border-2 ${currentStep >= 1 ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400' : 'border-slate-700 text-slate-500'} flex items-center justify-center text-xs font-bold">1</div>
+                        <div class="w-4 h-0.5 bg-slate-800"></div>
+                        <div id="step2" class="w-8 h-8 rounded-full border-2 ${currentStep >= 2 ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400' : 'border-slate-700 text-slate-500'} flex items-center justify-center text-xs font-bold">2</div>
+                        <div class="w-4 h-0.5 bg-slate-800"></div>
+                        <div id="step3" class="w-8 h-8 rounded-full border-2 ${currentStep >= 3 ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400' : 'border-slate-700 text-slate-500'} flex items-center justify-center text-xs font-bold">3</div>
+                    </div>
+
+                    <div id="adActionArea">
+                        <button onclick="watchAd()" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rectangle-ad"></i> Ver Anuncio (${currentStep + 1}/3)
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function watchAd() {
+            window.open('https://uplcm.com/4/12156618', '_blank');
+
+            const area = document.getElementById('adActionArea');
+            let timer = adSeconds;
+
+            area.innerHTML = `
+                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                    <p class="text-xs text-slate-400 mb-1">Verificando anuncio... espera:</p>
+                    <span id="adTimer" class="text-2xl font-mono font-bold text-indigo-400">${timer}s</span>
+                </div>
+            `;
+
+            const interval = setInterval(() => {
+                timer--;
+                const timerElem = document.getElementById('adTimer');
+                if (timerElem) timerElem.innerText = timer + 's';
+
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    currentStep++;
+                    const acc = accounts.find(a => a.id === selectedAccId);
+
+                    if (currentStep >= 3) {
+                        finishVerification(acc);
+                    } else {
+                        showStepModal(acc);
+                    }
+                }
+            }, 1000);
+        }
+
+        function finishVerification(acc) {
+            const container = document.getElementById('modalContent');
+
+            if (!acc.claimed) {
+                acc.claimed = true;
+                saveToStorage();
+                renderAccountsGrid();
+
+                let rewardDetails = '';
+                if (acc.type === 'code') {
+                    rewardDetails = `
+                        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-left space-y-2">
+                            <div>
+                                <span class="text-[10px] uppercase text-slate-500 font-bold block">Correo de Acceso</span>
+                                <span class="text-sm font-mono text-emerald-400 select-all font-bold">${acc.email}</span>
+                            </div>
+                            <div class="pt-2 border-t border-slate-800">
+                                <span class="text-[10px] uppercase text-slate-500 font-bold block mb-1">Generar Código TV / Pin</span>
+                                <a href="${acc.codeLink}" target="_blank" class="block text-center bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg text-xs transition">
+                                    <i class="fa-solid fa-key"></i> Obtener Código Ahora
+                                </a>
+                            </div>
+                        </div>`;
+                } else {
+                    rewardDetails = `
+                        <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-left space-y-2 font-mono">
+                            <div>
+                                <span class="text-[10px] uppercase text-slate-500 font-bold block font-sans">Correo</span>
+                                <span class="text-sm text-emerald-400 select-all font-bold">${acc.email}</span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] uppercase text-slate-500 font-bold block font-sans">Contraseña</span>
+                                <span class="text-sm text-emerald-400 select-all font-bold">${acc.pass}</span>
+                            </div>
+                        </div>`;
+                }
+
+                container.innerHTML = `
+                    <div class="text-center space-y-4">
+                        <div class="w-14 h-14 bg-emerald-500/20 border border-emerald-500/40 rounded-full flex items-center justify-center text-emerald-400 mx-auto text-2xl animate-bounce">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-white">¡Felicidades! Ganaste la cuenta</h2>
+                        <p class="text-xs text-slate-400">Eres el primero en completar los anuncios. Guarda estos datos inmediatamente:</p>
+                        ${rewardDetails}
+                        <p class="text-[10px] text-amber-400">⚠️ Si sales de esta ventana, no podrás recuperar los datos.</p>
+                    </div>
+                `;
+            } else {
+                showClaimedModal(acc);
+            }
+        }
+
+        function showClaimedModal(acc) {
+            const container = document.getElementById('modalContent');
+            container.innerHTML = `
+                <div class="text-center space-y-4">
+                    <div class="w-14 h-14 bg-rose-500/20 border border-rose-500/40 rounded-full flex items-center justify-center text-rose-400 mx-auto text-2xl">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-white">¡Muy tarde! Otro usuario la ganó</h2>
+                    <p class="text-xs text-slate-400">Alguien completó los 3 anuncios unos segundos antes que tú y reclamó la cuenta de <strong>${acc.name}</strong>.</p>
+                    
+                    <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
+                        <p class="text-xs text-amber-400 font-semibold mb-1">💡 ¿Quieres tu cuenta asegurada sin competir?</p>
+                        <p class="text-[11px] text-slate-400">Puedes comprar tu pantalla o cuenta completa en nuestra tienda VIP por un precio económico.</p>
+                    </div>
+
+                    <button onclick="closeRewardModal(); switchTab('vip')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-2.5 rounded-xl text-xs transition shadow-md shadow-amber-500/20">
+                        <i class="fa-solid fa-crown"></i> Ir a la Tienda VIP
+                    </button>
+                </div>
+            `;
+        }
+
+        function closeRewardModal() {
+            document.getElementById('rewardModal').classList.add('hidden');
+            document.getElementById('rewardModal').classList.remove('flex');
+        }
+
+        // PANEL ADMINISTRADOR LÓGICA
+        function toggleAdminModal() {
+            const modal = document.getElementById('adminModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function verifyAdminPin() {
+            const pin = document.getElementById('adminPinInput').value;
+            if (pin === ADMIN_PIN_CODE) {
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+
+                // Cargar datos Socio 1
+                document.getElementById('adminPartner1Name').value = partnersConfig.partner1.name || 'Socio 1';
+                document.getElementById('adminPartner1Wp').value = partnersConfig.partner1.wpPhone || '';
+                document.getElementById('adminPartner1Yape').value = partnersConfig.partner1.yapeNum || '';
+                document.getElementById('adminPartner1Bank').value = partnersConfig.partner1.bankDetails || '';
+                document.getElementById('adminPartner1Qr').value = partnersConfig.partner1.qrImage || '';
+
+                // Cargar datos Socio 2
+                document.getElementById('adminPartner2Name').value = partnersConfig.partner2.name || 'Socio 2';
+                document.getElementById('adminPartner2Wp').value = partnersConfig.partner2.wpPhone || '';
+                document.getElementById('adminPartner2Yape').value = partnersConfig.partner2.yapeNum || '';
+                document.getElementById('adminPartner2Bank').value = partnersConfig.partner2.bankDetails || '';
+                document.getElementById('adminPartner2Qr').value = partnersConfig.partner2.qrImage || '';
+
+                onAdminPlatformChange();
+            } else {
+                alert("PIN incorrecto. SI NO ERES ADMIN SE MANDARA UNA ALERTA AL SIGUIENTE INTENTO!!!");
+            }
+        }
+
+        // Subir imagen QR desde archivos locales
+        function uploadQrImage(partnerNum) {
+            const fileInput = document.getElementById(`adminPartner${partnerNum}QrFile`);
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(`adminPartner${partnerNum}Qr`).value = e.target.result;
+                    alert(`Imagen QR del Socio ${partnerNum} cargada desde tu galería con éxito.`);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function populateAdminDropdown() {
+            const select = document.getElementById('adminSelectPlatform');
+            select.innerHTML = '';
+            accounts.forEach(acc => {
+                const opt = document.createElement('option');
+                opt.value = acc.id;
+                opt.innerText = acc.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function onAdminPlatformChange() {
+            const selectedId = document.getElementById('adminSelectPlatform').value;
+            const acc = accounts.find(a => a.id === selectedId);
+
+            if (acc) {
+                document.getElementById('adminTypeSelect').value = acc.type;
+                document.getElementById('adminNewEmail').value = acc.email || '';
+                document.getElementById('adminNewPass').value = acc.pass || '';
+                document.getElementById('adminCodeLink').value = acc.codeLink || '';
+                
+                // VIP
+                document.getElementById('adminVipStatus').value = acc.vipStatus || 'available';
+                document.getElementById('adminVipPrice').value = acc.vipPrice || 'S/ 10.00';
+                document.getElementById('adminVipMode').value = acc.vipMode || 'Perfil Privado';
+
+                toggleAdminTypeFields();
+            }
+        }
+
+        function toggleAdminTypeFields() {
+            const type = document.getElementById('adminTypeSelect').value;
+            if (type === 'full') {
+                document.getElementById('adminPassContainer').classList.remove('hidden');
+                document.getElementById('adminLinkContainer').classList.add('hidden');
+            } else {
+                document.getElementById('adminPassContainer').classList.add('hidden');
+                document.getElementById('adminLinkContainer').classList.remove('hidden');
+            }
+        }
+
+        function clearCurrentAccount() {
+            const selectedId = document.getElementById('adminSelectPlatform').value;
+            const accIndex = accounts.findIndex(a => a.id === selectedId);
+            
+            if (accIndex !== -1) {
+                accounts[accIndex].email = '';
+                accounts[accIndex].pass = '';
+                accounts[accIndex].codeLink = '';
+                accounts[accIndex].claimed = false;
+
+                saveToStorage();
+                renderAccountsGrid();
+                onAdminPlatformChange();
+
+                alert("Datos GRATIS borrados. Ahora figura como PENDIENTE en la sección gratis.");
+            }
+        }
+
+        function saveAccountChanges() {
+            // Guardar config Socio 1
+            partnersConfig.partner1.name = document.getElementById('adminPartner1Name').value.trim() || 'Socio 1';
+            partnersConfig.partner1.wpPhone = document.getElementById('adminPartner1Wp').value.trim();
+            partnersConfig.partner1.yapeNum = document.getElementById('adminPartner1Yape').value.trim();
+            partnersConfig.partner1.bankDetails = document.getElementById('adminPartner1Bank').value.trim();
+            partnersConfig.partner1.qrImage = document.getElementById('adminPartner1Qr').value.trim();
+
+            // Guardar config Socio 2
+            partnersConfig.partner2.name = document.getElementById('adminPartner2Name').value.trim() || 'Socio 2';
+            partnersConfig.partner2.wpPhone = document.getElementById('adminPartner2Wp').value.trim();
+            partnersConfig.partner2.yapeNum = document.getElementById('adminPartner2Yape').value.trim();
+            partnersConfig.partner2.bankDetails = document.getElementById('adminPartner2Bank').value.trim();
+            partnersConfig.partner2.qrImage = document.getElementById('adminPartner2Qr').value.trim();
+
+            const selectedId = document.getElementById('adminSelectPlatform').value;
+            const type = document.getElementById('adminTypeSelect').value;
+            const newEmail = document.getElementById('adminNewEmail').value.trim();
+            const newPass = document.getElementById('adminNewPass').value.trim();
+            const newCodeLink = document.getElementById('adminCodeLink').value.trim();
+
+            const accIndex = accounts.findIndex(a => a.id === selectedId);
+            if (accIndex !== -1) {
+                // Sección Gratis
+                accounts[accIndex].type = type;
+                accounts[accIndex].email = newEmail;
+                accounts[accIndex].pass = newPass;
+                accounts[accIndex].codeLink = newCodeLink;
+                if (newEmail !== '') accounts[accIndex].claimed = false;
+
+                // Sección VIP
+                accounts[accIndex].vipStatus = document.getElementById('adminVipStatus').value;
+                accounts[accIndex].vipPrice = document.getElementById('adminVipPrice').value.trim();
+                accounts[accIndex].vipMode = document.getElementById('adminVipMode').value;
+
+                saveToStorage();
+                renderAccountsGrid();
+                renderVipAccountsGrid();
+
+                alert("¡Configuración de socios y cuentas guardada exitosamente!");
+                toggleAdminModal();
+            }
+        }
+    </script>
+</body>
+</html>
