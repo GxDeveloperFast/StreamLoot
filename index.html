@@ -34,7 +34,8 @@
                     <img id="siteLogo" 
                          src="imgg.png" 
                          alt="Logo StreamRewards" 
-                         class="w-7 h-7 object-contain">
+                         class="w-7 h-7 object-contain"
+                         onerror="this.src='https://cdn-icons-png.flaticon.com/512/1179/1179069.png'">
                 </div>
                 
                 <div class="flex flex-col">
@@ -79,8 +80,7 @@
                 <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/60 border border-indigo-800/40 px-3 py-1 rounded-full">Premios Diarios</span>
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-2">Desbloquea Cuentas Premium Gratis</h1>
                 <p class="text-slate-400 text-sm sm:text-base">Haz clic en los 3 anuncios por 5 segundos para verificar que eres humano y reclamar tu cuenta. ¡El primero en completarlo se la lleva!</p>
-                <p class="text-slate-400 text-sm sm:text-base">LAS CUENTAS LAS AVISAN 10 MINUTOS ANTES DE SUBIRLAS EN EL GRUPO DE WHATSAPP QUE SE ENCUENTRA ARRIBA!</p>
-
+                <p class="text-slate-400 text-sm sm:text-base mt-1">LAS CUENTAS LAS AVISAN 10 MINUTOS ANTES DE SUBIRLAS EN EL GRUPO DE WHATSAPP QUE SE ENCUENTRA ARRIBA!</p>
             </div>
 
             <!-- Grid Cuentas Gratis -->
@@ -156,7 +156,21 @@
             <div id="adminPanel" class="hidden space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-700 pb-3">
                     <h2 class="text-lg font-bold text-white">Panel de Gestión</h2>
-                    <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30">Socios Activos</span>
+                    <div class="flex items-center gap-1.5">
+                        <span id="cloudStatusBadge" class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30 font-semibold">Nube Sincronizada</span>
+                    </div>
+                </div>
+
+                <!-- Configuración Nube JSONBin.io -->
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl space-y-2 text-xs">
+                    <h3 class="font-bold text-indigo-400 flex items-center gap-1.5 text-xs">
+                        <i class="fa-solid fa-cloud"></i> Configuración Nube Compartida (JSONBin.io)
+                    </h3>
+                    <p class="text-[10px] text-slate-400">Inserta tus claves de jsonbin.io si deseas actualizar cambios desde el celular para ambos socios en tiempo real.</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="adminBinId" placeholder="BIN ID (opcional)" class="bg-slate-950 border border-slate-800 rounded p-1.5 text-white font-mono text-[10px]">
+                        <input type="password" id="adminApiKey" placeholder="API KEY (opcional)" class="bg-slate-950 border border-slate-800 rounded p-1.5 text-white font-mono text-[10px]">
+                    </div>
                 </div>
 
                 <!-- Configuración de Pagos VIP (Socio 1 & Socio 2) -->
@@ -298,19 +312,23 @@
         // =========================================================================
         const ADMIN_PIN_CODE = "2112026"; 
 
+        // OPCIONAL: Integración con la nube gratuita JSONBin.io para sincronización en tiempo real
+        let JSONBIN_BIN_ID = localStorage.getItem('6ae94a18ffd5d16053a1192a') || "";
+        let JSONBIN_API_KEY = localStorage.getItem('$2a$10$YrG7ly9QXLW/YOfmz6m4VOMf1ru.orjjTqfovrIoCdScfiQ7QJLdy') || "";
+
         // Configuración Global de Pagos (Socios 1 y 2)
-        let partnersConfig = JSON.parse(localStorage.getItem('stream_partners_config_v1')) || {
+        let partnersConfig = {
             partner1: {
                 name: 'ANDY ATOCHE',
-                wpPhone: '+51 945240055',
-                yapeNum: '+51 945240055 (Titular: Andy Atche)',
+                wpPhone: '51945240055',
+                yapeNum: '+51 945240055 (Titular: Andy Atoche)',
                 bankDetails: 'BCP: 191-XXXXXXXX-0-XX',
                 qrImage: 'https://cdn-icons-png.flaticon.com/512/1179/1179069.png'
             },
             partner2: {
                 name: 'ALVARO FERRER',
-                wpPhone: '+51 903374617',
-                yapeNum: '+5 1903374617 (Titular: Alvaro Ferrer)',
+                wpPhone: '51903374617',
+                yapeNum: '+51 903374617 (Titular: Alvaro Ferrer)',
                 bankDetails: 'BBVA: 0011-XXXXXXXX-XX',
                 qrImage: 'https://cdn-icons-png.flaticon.com/512/1179/1179069.png'
             }
@@ -332,6 +350,9 @@
         ];
 
         let accounts = JSON.parse(localStorage.getItem('stream_accounts_v6')) || defaultAccounts;
+        let storedPartners = JSON.parse(localStorage.getItem('stream_partners_config_v1'));
+        if (storedPartners) partnersConfig = storedPartners;
+
         let selectedAccId = null;
         let activeVipPartner = 'partner1';
         let currentStep = 0;
@@ -339,12 +360,53 @@
 
         // Cargar App
         document.addEventListener('DOMContentLoaded', () => {
+            fetchCloudData();
             renderAccountsGrid();
             renderVipAccountsGrid();
             populateAdminDropdown();
         });
 
-        function saveToStorage() {
+        // Sincronización con la nube (JSONBin.io)
+        async function fetchCloudData() {
+            if (!JSONBIN_BIN_ID || !JSONBIN_API_KEY) return;
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+                    headers: { 'X-Master-Key': JSONBIN_API_KEY }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.record && data.record.accounts) {
+                        accounts = data.record.accounts;
+                        partnersConfig = data.record.partnersConfig || partnersConfig;
+                        saveToLocalStorageOnly();
+                        renderAccountsGrid();
+                        renderVipAccountsGrid();
+                    }
+                }
+            } catch (e) {
+                console.log("Modo offline o sin API de nube.");
+            }
+        }
+
+        async function saveToStorage() {
+            saveToLocalStorageOnly();
+            if (JSONBIN_BIN_ID && JSONBIN_API_KEY) {
+                try {
+                    await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': JSONBIN_API_KEY
+                        },
+                        body: JSON.stringify({ accounts, partnersConfig })
+                    });
+                } catch (e) {
+                    console.log("Error guardando en la nube:", e);
+                }
+            }
+        }
+
+        function saveToLocalStorageOnly() {
             localStorage.setItem('stream_accounts_v6', JSON.stringify(accounts));
             localStorage.setItem('stream_partners_config_v1', JSON.stringify(partnersConfig));
         }
@@ -774,6 +836,10 @@
                 document.getElementById('adminLogin').classList.add('hidden');
                 document.getElementById('adminPanel').classList.remove('hidden');
 
+                // Cargar datos JSONBin
+                document.getElementById('adminBinId').value = JSONBIN_BIN_ID;
+                document.getElementById('adminApiKey').value = JSONBIN_API_KEY;
+
                 // Cargar datos Socio 1
                 document.getElementById('adminPartner1Name').value = partnersConfig.partner1.name || 'Socio 1';
                 document.getElementById('adminPartner1Wp').value = partnersConfig.partner1.wpPhone || '';
@@ -868,6 +934,16 @@
         }
 
         function saveAccountChanges() {
+            // Guardar config JSONBin opcional
+            const binId = document.getElementById('adminBinId').value.trim();
+            const apiKey = document.getElementById('adminApiKey').value.trim();
+            if (binId && apiKey) {
+                JSONBIN_BIN_ID = binId;
+                JSONBIN_API_KEY = apiKey;
+                localStorage.setItem('jsonbin_bin_id', binId);
+                localStorage.setItem('jsonbin_api_key', apiKey);
+            }
+
             // Guardar config Socio 1
             partnersConfig.partner1.name = document.getElementById('adminPartner1Name').value.trim() || 'Socio 1';
             partnersConfig.partner1.wpPhone = document.getElementById('adminPartner1Wp').value.trim();
