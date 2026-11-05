@@ -82,8 +82,8 @@
                 <span class="text-xs font-semibold uppercase tracking-wider text-amber-400 bg-amber-950/60 border border-amber-800/40 px-3 py-1 rounded-full flex items-center justify-center w-fit mx-auto gap-1">
                     <i class="fa-solid fa-bolt"></i> Entrega Inmediata Garantizada
                 </span>
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-2">Tienda VIP - Cuentas Completas y Perfiles Privados</h1>
-                <p class="text-slate-400 text-sm sm:text-base">Sin esperar ni ver anuncios. Elige entre perfil privado o cuenta completa con garantía total y soporte directo por WhatsApp.</p>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-2">Tienda VIP - Cuentas Completas, Perfiles y Planes</h1>
+                <p class="text-slate-400 text-sm sm:text-base">Sin esperar ni ver anuncios. Elige entre perfiles individuales, cuentas completas o planes por meses con garantía total y soporte directo por WhatsApp.</p>
             </div>
 
             <!-- Grid Cuentas VIP -->
@@ -306,15 +306,16 @@
                             </div>
                             <div>
                                 <label class="text-xs font-semibold text-slate-300 block mb-1">Modalidad VIP Principal</label>
-                                <select id="adminVipMode" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                                <select id="adminVipMode" onchange="toggleAdminVipModeFields()" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-white focus:outline-none focus:border-amber-500">
                                     <option value="Perfil Privado">Perfil Privado / Pantalla</option>
                                     <option value="Cuenta Completa">Cuenta Completa / Contraseña</option>
                                     <option value="Ambas Opciones">Ambas (Perfil + Cuenta Completa)</option>
+                                    <option value="Planes por Meses">Planes por Meses (1, 2, 3, 6, 12 Meses)</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-2 pt-1">
+                        <div id="adminVipStandardPrices" class="grid grid-cols-2 gap-2 pt-1">
                             <div>
                                 <label class="text-[11px] font-semibold text-slate-400 block mb-1">Precio Perfil Privado</label>
                                 <input type="text" id="adminVipProfilePrice" placeholder="S/ 10.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-xs text-amber-400 font-bold">
@@ -324,55 +325,82 @@
                                 <input type="text" id="adminVipFullPrice" placeholder="S/ 30.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-xs text-amber-400 font-bold">
                             </div>
                         </div>
+
+                        <!-- Precios por Meses para Spotify / YouTube -->
+                        <div id="adminVipMonthPrices" class="hidden space-y-1.5 pt-1 border-t border-slate-800">
+                            <span class="text-[11px] font-bold text-amber-300 block">Precios por Duración (Meses)</span>
+                            <div class="grid grid-cols-3 gap-1.5">
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block">1 Mes</label>
+                                    <input type="text" id="adminVipPrice1M" placeholder="S/ 6.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1 text-xs text-amber-400 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block">2 Meses</label>
+                                    <input type="text" id="adminVipPrice2M" placeholder="S/ 10.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1 text-xs text-amber-400 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block">3 Meses</label>
+                                    <input type="text" id="adminVipPrice3M" placeholder="S/ 15.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1 text-xs text-amber-400 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block">6 Meses</label>
+                                    <input type="text" id="adminVipPrice6M" placeholder="S/ 25.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1 text-xs text-amber-400 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block">12 Meses</label>
+                                    <input type="text" id="adminVipPrice12M" placeholder="S/ 45.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1 text-xs text-amber-400 font-bold">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="border-t border-slate-800 pt-3">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-xs font-bold text-indigo-400 block">Lote de Cuentas GRATIS (Stock Múltiple)</span>
-                            <span id="stockCountBadge" class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800">0 Cuentas</span>
+                    <!-- Lote de Cuentas GRATIS -->
+                    <div class="bg-slate-900 border border-indigo-500/30 p-3 rounded-xl space-y-2 text-xs">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-1">
+                            <span class="font-bold text-indigo-400">Lote de Cuentas GRATIS (Stock Múltiple)</span>
+                            <span id="stockCountBadge" class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded font-mono">0 Cuentas</span>
                         </div>
-                        
+
                         <div>
-                            <label class="text-xs font-semibold text-slate-300 block mb-1">Tipo de Entrega Gratis</label>
-                            <select id="adminTypeSelect" onchange="toggleAdminTypeFields()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                            <label class="text-slate-400 block mb-1">Tipo de Entrega Gratis</label>
+                            <select id="adminTypeSelect" onchange="toggleAdminTypeFields()" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-xs text-white">
                                 <option value="full">Cuenta Completa (Email + Contraseña)</option>
                                 <option value="code">Solo Email + Enlace de Código TV / Acceso</option>
                             </select>
                         </div>
 
-                        <!-- Formulario para agregar una cuenta al lote -->
-                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 mt-2 space-y-2">
-                            <span class="text-[11px] font-bold text-slate-300 block">Agregar nueva cuenta al lote:</span>
-                            <input type="text" id="adminNewEmail" placeholder="usuario@correo.com" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white">
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 space-y-2">
+                            <span class="text-[11px] font-semibold text-slate-300 block">Agregar nueva cuenta al lote:</span>
+                            <input type="text" id="adminNewEmail" placeholder="usuario@correo.com" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
                             
                             <div id="adminPassContainer">
-                                <input type="text" id="adminNewPass" placeholder="Contraseña de la cuenta" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white">
+                                <input type="text" id="adminNewPass" placeholder="Contraseña de la cuenta" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
                             </div>
 
                             <div id="adminLinkContainer" class="hidden">
-                                <input type="text" id="adminCodeLink" placeholder="https://enlace-para-codigo-tv.com" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white">
+                                <input type="text" id="adminCodeLink" placeholder="https://misitio.com/obtener-codigo" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-white">
                             </div>
 
-                            <button onclick="addAccountToStockQueue()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 rounded text-xs transition flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-plus"></i> Añadir esta cuenta al Lote
+                            <button onclick="addAccountToStockQueue()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 rounded text-xs transition">
+                                + Añadir esta cuenta al Lote
                             </button>
                         </div>
 
-                        <!-- Lista visual de cuentas en inventario -->
-                        <div class="mt-3">
-                            <span class="text-[11px] text-slate-400 block mb-1">Inventario actual en lote:</span>
-                            <div id="adminStockQueueList" class="max-h-32 overflow-y-auto space-y-1 bg-slate-950 p-2 rounded border border-slate-800 text-[11px]">
-                                <!-- Lista cargada por JS -->
+                        <!-- Lista visual de cuentas cargadas -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-center text-[10px] text-slate-400">
+                                <span>Inventario actual en lote:</span>
+                                <button onclick="clearCurrentStockQueue()" class="text-rose-400 hover:underline">Vaciar Todo</button>
+                            </div>
+                            <div id="adminStockQueueList" class="max-h-28 overflow-y-auto space-y-1 text-[11px]">
+                                <!-- Ítems dinámicos -->
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex gap-2 pt-3">
-                        <button onclick="clearCurrentStockQueue()" class="w-1/3 bg-rose-900/40 hover:bg-rose-800/60 text-rose-300 border border-rose-700/50 font-semibold text-xs py-2.5 rounded-lg transition">
-                            Vaciar Lote
-                        </button>
-                        <button onclick="saveAccountChanges()" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded-lg transition shadow-lg shadow-emerald-600/20">
-                            Guardar en la Nube
+                    <div class="pt-2">
+                        <button onclick="saveAccountChanges()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-lg transition shadow-lg shadow-emerald-600/20">
+                            Guardar Cambios en la Nube
                         </button>
                     </div>
                 </div>
@@ -419,17 +447,17 @@
 
         // Lista Completa de Plataformas
         const defaultAccounts = [
-            { id: 'netflix', name: 'Netflix Premium', icon: 'fa-film', color: 'bg-red-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 10.00', vipFullPrice: 'S/ 30.00' },
-            { id: 'disney', name: 'Disney+ Premium', icon: 'fa-wand-magic-sparkles', color: 'bg-blue-600', type: 'code', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 10.00', vipFullPrice: 'S/ 28.00' },
-            { id: 'max', name: 'Max (HBO)', icon: 'fa-tv', color: 'bg-purple-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 8.00', vipFullPrice: 'S/ 22.00' },
-            { id: 'spotify', name: 'Spotify Premium', icon: 'fa-music', color: 'bg-emerald-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Cuenta Completa', vipProfilePrice: '', vipFullPrice: 'S/ 9.00' },
-            { id: 'appletv', name: 'Apple TV+', icon: 'fa-apple', color: 'bg-slate-700', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: 'S/ 7.00', vipFullPrice: 'S/ 18.00' },
-            { id: 'prime', name: 'Prime Video', icon: 'fa-video', color: 'bg-sky-600', type: 'code', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 8.00', vipFullPrice: 'S/ 20.00' },
-            { id: 'crunchyroll', name: 'Crunchyroll Mega Fan', icon: 'fa-ghost', color: 'bg-orange-500', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: 'S/ 6.00', vipFullPrice: 'S/ 15.00' },
-            { id: 'paramount', name: 'Paramount+', icon: 'fa-mountain', color: 'bg-blue-800', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Perfil Privado', vipProfilePrice: 'S/ 6.00', vipFullPrice: 'S/ 16.00' },
-            { id: 'youtube', name: 'YouTube Premium', icon: 'fa-play', color: 'bg-red-500', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Cuenta Completa', vipProfilePrice: '', vipFullPrice: 'S/ 7.00' },
-            { id: 'deezer', name: 'Deezer Premium', icon: 'fa-compact-disc', color: 'bg-pink-600', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: '', vipFullPrice: 'S/ 5.00' },
-            { id: 'starplus', name: 'Star+', icon: 'fa-star', color: 'bg-amber-600', type: 'code', freeStock: [], vipStatus: 'disabled', vipMode: 'Perfil Privado', vipProfilePrice: 'S/ 8.00', vipFullPrice: '' }
+            { id: 'netflix', name: 'Netflix Premium', icon: 'fa-film', color: 'bg-red-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 10.00', vipFullPrice: 'S/ 30.00', vipMonthPrices: {} },
+            { id: 'disney', name: 'Disney+ Premium', icon: 'fa-wand-magic-sparkles', color: 'bg-blue-600', type: 'code', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 10.00', vipFullPrice: 'S/ 28.00', vipMonthPrices: {} },
+            { id: 'max', name: 'Max (HBO)', icon: 'fa-tv', color: 'bg-purple-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 8.00', vipFullPrice: 'S/ 22.00', vipMonthPrices: {} },
+            { id: 'spotify', name: 'Spotify Premium', icon: 'fa-music', color: 'bg-emerald-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Planes por Meses', vipProfilePrice: '', vipFullPrice: '', vipMonthPrices: { m1: 'S/ 6.00', m2: 'S/ 10.00', m3: 'S/ 15.00', m6: 'S/ 25.00', m12: 'S/ 45.00' } },
+            { id: 'appletv', name: 'Apple TV+', icon: 'fa-apple', color: 'bg-slate-700', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: 'S/ 7.00', vipFullPrice: 'S/ 18.00', vipMonthPrices: {} },
+            { id: 'prime', name: 'Prime Video', icon: 'fa-video', color: 'bg-sky-600', type: 'code', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 8.00', vipFullPrice: 'S/ 20.00', vipMonthPrices: {} },
+            { id: 'crunchyroll', name: 'Crunchyroll Mega Fan', icon: 'fa-ghost', color: 'bg-orange-500', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: 'S/ 6.00', vipFullPrice: 'S/ 15.00', vipMonthPrices: {} },
+            { id: 'paramount', name: 'Paramount+', icon: 'fa-mountain', color: 'bg-blue-800', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Perfil Privado', vipProfilePrice: 'S/ 6.00', vipFullPrice: 'S/ 16.00', vipMonthPrices: {} },
+            { id: 'youtube', name: 'YouTube Premium', icon: 'fa-play', color: 'bg-red-500', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Planes por Meses', vipProfilePrice: '', vipFullPrice: '', vipMonthPrices: { m1: 'S/ 6.00', m2: 'S/ 10.00', m3: 'S/ 14.00', m6: 'S/ 24.00', m12: 'S/ 40.00' } },
+            { id: 'deezer', name: 'Deezer Premium', icon: 'fa-compact-disc', color: 'bg-pink-600', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: '', vipFullPrice: 'S/ 5.00', vipMonthPrices: {} },
+            { id: 'starplus', name: 'Star+', icon: 'fa-star', color: 'bg-amber-600', type: 'code', freeStock: [], vipStatus: 'disabled', vipMode: 'Perfil Privado', vipProfilePrice: 'S/ 8.00', vipFullPrice: '', vipMonthPrices: {} }
         ];
 
         let accounts = defaultAccounts;
@@ -673,33 +701,57 @@
                             Stock Disponible
                         </span>`;
                     
-                    let profileBtn = '';
-                    let fullBtn = '';
+                    if (acc.vipMode === 'Planes por Meses' && acc.vipMonthPrices) {
+                        let monthBtns = '';
+                        const months = [
+                            { key: 'm1', label: '1 Mes' },
+                            { key: 'm2', label: '2 Meses' },
+                            { key: 'm3', label: '3 Meses' },
+                            { key: 'm6', label: '6 Meses' },
+                            { key: 'm12', label: '12 Meses' }
+                        ];
 
-                    const showProfile = (acc.vipMode === 'Perfil Privado' || acc.vipMode === 'Ambas Opciones') && acc.vipProfilePrice && acc.vipProfilePrice.trim() !== '';
-                    const showFull = (acc.vipMode === 'Cuenta Completa' || acc.vipMode === 'Ambas Opciones') && acc.vipFullPrice && acc.vipFullPrice.trim() !== '';
+                        months.forEach(m => {
+                            const p = acc.vipMonthPrices[m.key];
+                            if (p && p.trim() !== '') {
+                                monthBtns += `
+                                    <button onclick="openVipBuyModal('${acc.id}', 'Plan ${m.label}', '${p}')" class="w-full bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold py-1.5 rounded-lg text-xs transition flex justify-between items-center px-2.5">
+                                        <span><i class="fa-solid fa-calendar-days text-[10px] mr-1 text-amber-400"></i> ${m.label}</span>
+                                        <span class="font-mono text-amber-400 font-extrabold">${p}</span>
+                                    </button>`;
+                            }
+                        });
 
-                    if (showProfile) {
-                        profileBtn = `
-                            <button onclick="openVipBuyModal('${acc.id}', 'Perfil Privado', '${acc.vipProfilePrice}')" class="w-full bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold py-2 rounded-xl text-xs transition flex justify-between items-center px-3">
-                                <span><i class="fa-solid fa-user text-[10px] mr-1"></i> Perfil Privado</span>
-                                <span class="font-mono text-amber-400 font-extrabold">${acc.vipProfilePrice}</span>
-                            </button>`;
+                        optionsButtonsHtml = `<div class="space-y-1.5 mt-3">${monthBtns}</div>`;
+                    } else {
+                        let profileBtn = '';
+                        let fullBtn = '';
+
+                        const showProfile = (acc.vipMode === 'Perfil Privado' || acc.vipMode === 'Ambas Opciones') && acc.vipProfilePrice && acc.vipProfilePrice.trim() !== '';
+                        const showFull = (acc.vipMode === 'Cuenta Completa' || acc.vipMode === 'Ambas Opciones') && acc.vipFullPrice && acc.vipFullPrice.trim() !== '';
+
+                        if (showProfile) {
+                            profileBtn = `
+                                <button onclick="openVipBuyModal('${acc.id}', 'Perfil Privado', '${acc.vipProfilePrice}')" class="w-full bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold py-2 rounded-xl text-xs transition flex justify-between items-center px-3">
+                                    <span><i class="fa-solid fa-user text-[10px] mr-1"></i> Perfil Privado</span>
+                                    <span class="font-mono text-amber-400 font-extrabold">${acc.vipProfilePrice}</span>
+                                </button>`;
+                        }
+
+                        if (showFull) {
+                            fullBtn = `
+                                <button onclick="openVipBuyModal('${acc.id}', 'Cuenta Completa', '${acc.vipFullPrice}')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-2 rounded-xl text-xs transition flex justify-between items-center px-3 shadow-md shadow-amber-500/20">
+                                    <span><i class="fa-solid fa-house text-[10px] mr-1"></i> Cuenta Completa</span>
+                                    <span class="font-mono text-slate-950 font-black">${acc.vipFullPrice}</span>
+                                </button>`;
+                        }
+
+                        optionsButtonsHtml = `
+                            <div class="space-y-2 mt-3">
+                                ${profileBtn}
+                                ${fullBtn}
+                            </div>`;
                     }
-
-                    if (showFull) {
-                        fullBtn = `
-                            <button onclick="openVipBuyModal('${acc.id}', 'Cuenta Completa', '${acc.vipFullPrice}')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-2 rounded-xl text-xs transition flex justify-between items-center px-3 shadow-md shadow-amber-500/20">
-                                <span><i class="fa-solid fa-house text-[10px] mr-1"></i> Cuenta Completa</span>
-                                <span class="font-mono text-slate-950 font-black">${acc.vipFullPrice}</span>
-                            </button>`;
-                    }
-
-                    optionsButtonsHtml = `
-                        <div class="space-y-2 mt-3">
-                            ${profileBtn}
-                            ${fullBtn}
-                        </div>`;
 
                 } else {
                     statusHtml = `
@@ -1072,8 +1124,30 @@
                 document.getElementById('adminVipProfilePrice').value = acc.vipProfilePrice || '';
                 document.getElementById('adminVipFullPrice').value = acc.vipFullPrice || '';
 
+                if (!acc.vipMonthPrices) acc.vipMonthPrices = {};
+                document.getElementById('adminVipPrice1M').value = acc.vipMonthPrices.m1 || '';
+                document.getElementById('adminVipPrice2M').value = acc.vipMonthPrices.m2 || '';
+                document.getElementById('adminVipPrice3M').value = acc.vipMonthPrices.m3 || '';
+                document.getElementById('adminVipPrice6M').value = acc.vipMonthPrices.m6 || '';
+                document.getElementById('adminVipPrice12M').value = acc.vipMonthPrices.m12 || '';
+
+                toggleAdminVipModeFields();
                 renderAdminStockQueueList(acc);
                 toggleAdminTypeFields();
+            }
+        }
+
+        function toggleAdminVipModeFields() {
+            const mode = document.getElementById('adminVipMode').value;
+            const standardBox = document.getElementById('adminVipStandardPrices');
+            const monthBox = document.getElementById('adminVipMonthPrices');
+
+            if (mode === 'Planes por Meses') {
+                standardBox.classList.add('hidden');
+                monthBox.classList.remove('hidden');
+            } else {
+                standardBox.classList.remove('hidden');
+                monthBox.classList.add('hidden');
             }
         }
 
@@ -1203,6 +1277,14 @@
                 accounts[accIndex].vipMode = document.getElementById('adminVipMode').value;
                 accounts[accIndex].vipProfilePrice = document.getElementById('adminVipProfilePrice').value.trim();
                 accounts[accIndex].vipFullPrice = document.getElementById('adminVipFullPrice').value.trim();
+
+                accounts[accIndex].vipMonthPrices = {
+                    m1: document.getElementById('adminVipPrice1M').value.trim(),
+                    m2: document.getElementById('adminVipPrice2M').value.trim(),
+                    m3: document.getElementById('adminVipPrice3M').value.trim(),
+                    m6: document.getElementById('adminVipPrice6M').value.trim(),
+                    m12: document.getElementById('adminVipPrice12M').value.trim()
+                };
 
                 saveToCloud();
                 renderAccountsGrid();
