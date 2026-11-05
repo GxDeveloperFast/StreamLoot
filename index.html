@@ -207,6 +207,63 @@
                     <span id="cloudStatusBadge" class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30">Sincronizado Cloud</span>
                 </div>
 
+                <!-- NUEVA SECCIÓN: CREAR NUEVA PLATAFORMA -->
+                <div class="bg-slate-900 border border-emerald-500/40 p-3 rounded-xl space-y-2 text-xs">
+                    <h3 class="font-bold text-emerald-400 flex items-center justify-between text-sm border-b border-slate-800 pb-1">
+                        <span><i class="fa-solid fa-plus-circle"></i> Añadir Nueva Plataforma (Canva, ChatGPT, etc.)</span>
+                        <button type="button" onclick="toggleAddPlatformForm()" class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded hover:bg-emerald-500/40 transition">
+                            <span id="toggleAddPlatBtnText">Mostrar Formulario</span>
+                        </button>
+                    </h3>
+
+                    <div id="addPlatformFormContainer" class="hidden space-y-2 pt-1">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-slate-400 block mb-1">Nombre (Ej: Canva Pro)</label>
+                                <input type="text" id="newPlatName" placeholder="Canva Pro" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">ID Único (Ej: canva)</label>
+                                <input type="text" id="newPlatId" placeholder="canvapro" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-slate-400 block mb-1">Color de Fondo</label>
+                                <select id="newPlatColor" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white text-xs">
+                                    <option value="bg-emerald-600">Esmeralda / Verde (Canva, Spotify)</option>
+                                    <option value="bg-purple-600">Púrpura / Morado (Max, Twitch)</option>
+                                    <option value="bg-sky-600">Sky / Celeste (Prime, Canva)</option>
+                                    <option value="bg-blue-600">Azul (Disney, Paramount)</option>
+                                    <option value="bg-red-600">Rojo (Netflix, YouTube)</option>
+                                    <option value="bg-orange-500">Naranja (Crunchyroll)</option>
+                                    <option value="bg-amber-600">Ámbar / Amarillo (Star+)</option>
+                                    <option value="bg-pink-600">Rosa (Deezer)</option>
+                                    <option value="bg-slate-700">Gris Oscuro (Apple)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">Ícono FontAwesome</label>
+                                <select id="newPlatIcon" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white text-xs">
+                                    <option value="fa-palette">Paleta de Arte (Canva / Diseño)</option>
+                                    <option value="fa-robot">Robot / IA (ChatGPT / Midjourney)</option>
+                                    <option value="fa-tv">TV / Streaming (IPTV, Max)</option>
+                                    <option value="fa-film">Película (Netflix)</option>
+                                    <option value="fa-music">Música (Spotify / Deezer)</option>
+                                    <option value="fa-gamepad">Juegos (Xbox / PlayStation)</option>
+                                    <option value="fa-star">Estrella (VIP General)</option>
+                                    <option value="fa-wand-magic-sparkles">Magia / Sparkles</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="createNewPlatform()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded text-xs transition shadow-md shadow-emerald-600/20">
+                            + Crear e Insertar Plataforma
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Configuración de Videos Tutoriales -->
                 <div class="bg-slate-900/90 border border-sky-500/30 p-3 rounded-xl space-y-2 text-xs">
                     <h3 class="font-bold text-sky-400 flex items-center gap-1.5 text-sm">
@@ -395,11 +452,11 @@
                             <div id="adminStockQueueList" class="max-h-28 overflow-y-auto space-y-1 text-[11px]">
                                 <!-- Ítems dinámicos -->
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-2">
-                        <button onclick="saveAccountChanges()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-lg transition shadow-lg shadow-emerald-600/20">
+                    <div class="flex gap-2 pt-2">
+                        <button type="button" onclick="deleteCurrentPlatform()" class="w-1/3 bg-rose-900/40 hover:bg-rose-800/60 text-rose-300 border border-rose-700/50 font-semibold text-xs py-3 rounded-lg transition">
+                            <i class="fa-solid fa-trash mr-1"></i> Eliminar Plataforma
+                        </button>
+                        <button type="button" onclick="saveAccountChanges()" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-lg transition shadow-lg shadow-emerald-600/20">
                             Guardar Cambios en la Nube
                         </button>
                     </div>
@@ -1134,6 +1191,88 @@
                 toggleAdminVipModeFields();
                 renderAdminStockQueueList(acc);
                 toggleAdminTypeFields();
+            }
+        }
+
+        // =========================================================================
+        // NUEVAS FUNCIONES PARA CREAR Y ELIMINAR PLATAFORMAS
+        // =========================================================================
+        function toggleAddPlatformForm() {
+            const container = document.getElementById('addPlatformFormContainer');
+            const btnText = document.getElementById('toggleAddPlatBtnText');
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                btnText.innerText = 'Ocultar Formulario';
+            } else {
+                container.classList.add('hidden');
+                btnText.innerText = 'Mostrar Formulario';
+            }
+        }
+
+        function createNewPlatform() {
+            const rawName = document.getElementById('newPlatName').value.trim();
+            const rawId = document.getElementById('newPlatId').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+            const color = document.getElementById('newPlatColor').value;
+            const icon = document.getElementById('newPlatIcon').value;
+
+            if (!rawName || !rawId) {
+                alert("Por favor ingresa un nombre y un ID válido para la nueva plataforma.");
+                return;
+            }
+
+            if (accounts.some(a => a.id === rawId)) {
+                alert("Ya existe una plataforma con ese ID. Usa uno diferente.");
+                return;
+            }
+
+            const newAccount = {
+                id: rawId,
+                name: rawName,
+                icon: icon,
+                color: color,
+                type: 'full',
+                freeStock: [],
+                vipStatus: 'available',
+                vipMode: 'Ambas Opciones',
+                vipProfilePrice: 'S/ 10.00',
+                vipFullPrice: 'S/ 25.00',
+                vipMonthPrices: {}
+            };
+
+            accounts.push(newAccount);
+            saveToCloud();
+
+            populateAdminDropdown();
+            document.getElementById('adminSelectPlatform').value = rawId;
+            onAdminPlatformChange();
+            renderAccountsGrid();
+            renderVipAccountsGrid();
+
+            document.getElementById('newPlatName').value = '';
+            document.getElementById('newPlatId').value = '';
+            toggleAddPlatformForm();
+
+            alert(`¡La plataforma "${rawName}" ha sido creada y guardada con éxito en la nube!`);
+        }
+
+        function deleteCurrentPlatform() {
+            const selectedId = document.getElementById('adminSelectPlatform').value;
+            const acc = accounts.find(a => a.id === selectedId);
+            
+            if (!acc) return;
+
+            if (confirm(`¿Estás seguro de que deseas eliminar permanentemente la plataforma "${acc.name}"?`)) {
+                accounts = accounts.filter(a => a.id !== selectedId);
+                saveToCloud();
+
+                populateAdminDropdown();
+                if (accounts.length > 0) {
+                    onAdminPlatformChange();
+                }
+                renderAccountsGrid();
+                renderVipAccountsGrid();
+
+                alert(`Plataforma "${acc.name}" eliminada correctamente.`);
             }
         }
 
