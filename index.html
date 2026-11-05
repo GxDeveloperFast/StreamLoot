@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- TÍTULO DE LA PESTAÑA DEL NAVEGADOR -->
-    <title>StreamLoot - Tienda VIP y Cuentas Gratis</title>
+    <title>StreamLoot - Tienda VIP, Gratis y Tutoriales</title>
     
     <!-- ÍCONO DE LA PESTAÑA DEL NAVEGADOR (FAVICON) -->
     <link id="favicon" rel="icon" type="image/png" href="imgg.png">
@@ -58,14 +58,17 @@
         </div>
     </header>
 
-    <!-- Navegación entre Secciones: VIP vs Gratis (VIP Primero) -->
+    <!-- Navegación entre Secciones: VIP, Gratis y Tutoriales -->
     <div class="bg-slate-900/80 border-b border-slate-800 py-3">
-        <div class="max-w-6xl mx-auto px-4 flex justify-center space-x-3">
-            <button id="tabBtnVip" onclick="switchTab('vip')" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20">
-                <i class="fa-solid fa-crown"></i> Tienda VIP (Comprar Cuentas)
+        <div class="max-w-6xl mx-auto px-4 flex justify-center space-x-2 sm:space-x-3 overflow-x-auto">
+            <button id="tabBtnVip" onclick="switchTab('vip')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20 whitespace-nowrap">
+                <i class="fa-solid fa-crown"></i> Tienda VIP (Comprar)
             </button>
-            <button id="tabBtnFree" onclick="switchTab('free')" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white">
+            <button id="tabBtnFree" onclick="switchTab('free')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white whitespace-nowrap">
                 <i class="fa-solid fa-gift"></i> Sección Gratis (Sponsors)
+            </button>
+            <button id="tabBtnTutorials" onclick="switchTab('tutorials')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white whitespace-nowrap">
+                <i class="fa-solid fa-book-open text-sky-400"></i> Tutoriales
             </button>
         </div>
     </div>
@@ -73,14 +76,14 @@
     <!-- MAIN CONTENT AREA -->
     <main class="max-w-6xl mx-auto px-4 py-8 w-full flex-grow">
         
-        <!-- SECCIÓN VIP (TIENDA) - AHORA PRIMERO -->
+        <!-- SECCIÓN VIP (TIENDA) -->
         <div id="sectionVip">
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <span class="text-xs font-semibold uppercase tracking-wider text-amber-400 bg-amber-950/60 border border-amber-800/40 px-3 py-1 rounded-full flex items-center justify-center w-fit mx-auto gap-1">
                     <i class="fa-solid fa-bolt"></i> Entrega Inmediata Garantizada
                 </span>
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-2">Tienda VIP - Cuentas Completas y Perfiles Privados</h1>
-                <p class="text-slate-400 text-sm sm:text-base">Sin esperar ni ver anuncios. Compra cuentas completas o perfiles individuales con garantía total y soporte directo por WhatsApp.</p>
+                <p class="text-slate-400 text-sm sm:text-base">Sin esperar ni ver anuncios. Elige entre perfil privado o cuenta completa con garantía total y soporte directo por WhatsApp.</p>
             </div>
 
             <!-- Grid Cuentas VIP -->
@@ -89,18 +92,64 @@
             </div>
         </div>
 
-        <!-- SECCIÓN GRATIS - AHORA SEGUNDO -->
+        <!-- SECCIÓN GRATIS -->
         <div id="sectionFree" class="hidden">
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-950/60 border border-indigo-800/40 px-3 py-1 rounded-full">Premios Diarios</span>
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-2">Desbloquea Cuentas Premium Gratis</h1>
                 <p class="text-slate-400 text-sm sm:text-base">Haz clic en los 3 anuncios por 5 segundos para verificar que eres humano y reclamar tu cuenta. ¡El primero en completarlo se la lleva!</p>
-                <p class="text-slate-400 text-sm sm:text-base">LAS CUENTAS LAS AVISAN 10 MINUTOS ANTES DE SUBIRLAS EN EL GRUPO DE WHATSAPP QUE SE ENCUENTRA ARRIBA!</p>
+                <p class="text-slate-400 text-sm sm:text-base mt-1 text-amber-300 font-semibold">LAS CUENTAS LAS AVISAN 10 MINUTOS ANTES DE SUBIRLAS EN EL GRUPO DE WHATSAPP QUE SE ENCUENTRA ARRIBA!</p>
             </div>
 
             <!-- Grid Cuentas Gratis -->
             <div id="accountsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Cuentas renderizadas dinámicamente -->
+            </div>
+        </div>
+
+        <!-- SECCIÓN TUTORIALES -->
+        <div id="sectionTutorials" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto mb-6">
+                <span class="text-xs font-semibold uppercase tracking-wider text-sky-400 bg-sky-950/60 border border-sky-800/40 px-3 py-1 rounded-full inline-flex items-center gap-1">
+                    <i class="fa-solid fa-graduation-cap"></i> Guías & Ayuda
+                </span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 mb-2">Centro de Tutoriales</h1>
+                <p class="text-slate-400 text-sm sm:text-base">Aprende fácilmente a iniciar sesión en tus plataformas con código TV o a realizar compras VIP paso a paso.</p>
+            </div>
+
+            <!-- Contenedor de Videos Tutoriales -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Video 1: Código TV -->
+                <div class="glass-card p-5 rounded-2xl border border-sky-500/20 space-y-4">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
+                        <div class="bg-sky-500/20 text-sky-400 w-10 h-10 rounded-xl flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-tv"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">¿Cómo ingresar por Código TV?</h3>
+                            <p class="text-xs text-slate-400">Tutorial en vídeo explicativo</p>
+                        </div>
+                    </div>
+                    <div id="tutVideoBox1" class="w-full aspect-video rounded-xl bg-slate-900 border border-slate-800 overflow-hidden flex items-center justify-center text-xs text-slate-500">
+                        <!-- Renderizado de Video dinámico -->
+                    </div>
+                </div>
+
+                <!-- Video 2: Compra VIP -->
+                <div class="glass-card p-5 rounded-2xl border border-amber-500/20 space-y-4">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
+                        <div class="bg-amber-500/20 text-amber-400 w-10 h-10 rounded-xl flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">¿Cómo comprar cuentas en la Tienda VIP?</h3>
+                            <p class="text-xs text-slate-400">Guía rápida de compra y pago</p>
+                        </div>
+                    </div>
+                    <div id="tutVideoBox2" class="w-full aspect-video rounded-xl bg-slate-900 border border-slate-800 overflow-hidden flex items-center justify-center text-xs text-slate-500">
+                        <!-- Renderizado de Video dinámico -->
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -156,6 +205,21 @@
                 <div class="flex justify-between items-center border-b border-slate-700 pb-3">
                     <h2 class="text-lg font-bold text-white">Panel de Gestión Cloud</h2>
                     <span id="cloudStatusBadge" class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30">Sincronizado Cloud</span>
+                </div>
+
+                <!-- Configuración de Videos Tutoriales -->
+                <div class="bg-slate-900/90 border border-sky-500/30 p-3 rounded-xl space-y-2 text-xs">
+                    <h3 class="font-bold text-sky-400 flex items-center gap-1.5 text-sm">
+                        <i class="fa-solid fa-video"></i> Configuración de Vídeos Tutoriales
+                    </h3>
+                    <div>
+                        <label class="text-slate-400 block mb-1">Enlace Vídeo 1 (Código TV - YouTube o MP4 URL)</label>
+                        <input type="text" id="adminVideo1Url" placeholder="https://www.youtube.com/embed/XXXXXX" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 block mb-1">Enlace Vídeo 2 (Compra VIP - YouTube o MP4 URL)</label>
+                        <input type="text" id="adminVideo2Url" placeholder="https://www.youtube.com/embed/XXXXXX" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                    </div>
                 </div>
 
                 <!-- Configuración de Pagos VIP (Socio 1 & Socio 2) -->
@@ -227,32 +291,47 @@
                         </select>
                     </div>
 
-                    <!-- Configuración Sección Gratis vs VIP -->
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="text-xs font-semibold text-slate-300 block mb-1">Estado en Sección VIP</label>
-                            <select id="adminVipStatus" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-amber-500">
-                                <option value="available">Disponible en Tienda VIP</option>
-                                <option value="coming_soon">Muy Pronto (Sin Stock)</option>
-                                <option value="disabled">Desactivar de VIP</option>
-                            </select>
+                    <!-- Configuración Sección VIP -->
+                    <div class="bg-slate-900 border border-amber-500/30 p-3 rounded-xl space-y-2">
+                        <span class="text-xs font-bold text-amber-400 block border-b border-slate-800 pb-1">👑 Ajustes Tienda VIP</span>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-xs font-semibold text-slate-300 block mb-1">Estado en VIP</label>
+                                <select id="adminVipStatus" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                                    <option value="available">Disponible en VIP</option>
+                                    <option value="coming_soon">Muy Pronto (Sin Stock)</option>
+                                    <option value="disabled">Desactivar de VIP</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs font-semibold text-slate-300 block mb-1">Modalidad VIP Principal</label>
+                                <select id="adminVipMode" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Perfil Privado">Perfil Privado / Pantalla</option>
+                                    <option value="Cuenta Completa">Cuenta Completa / Contraseña</option>
+                                    <option value="Ambas Opciones">Ambas (Perfil + Cuenta Completa)</option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <label class="text-xs font-semibold text-slate-300 block mb-1">Modalidad VIP</label>
-                            <select id="adminVipMode" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-amber-500">
-                                <option value="Perfil Privado">Perfil Privado / Pantalla</option>
-                                <option value="Cuenta Completa">Cuenta Completa Privada</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div>
-                        <label class="text-xs font-semibold text-slate-300 block mb-1">Precio VIP (Ej: S/ 12.00)</label>
-                        <input type="text" id="adminVipPrice" placeholder="S/ 10.00" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-amber-500 font-bold text-amber-400">
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <div>
+                                <label class="text-[11px] font-semibold text-slate-400 block mb-1">Precio Perfil Privado</label>
+                                <input type="text" id="adminVipProfilePrice" placeholder="S/ 10.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-xs text-amber-400 font-bold">
+                            </div>
+                            <div>
+                                <label class="text-[11px] font-semibold text-slate-400 block mb-1">Precio Cuenta Completa</label>
+                                <input type="text" id="adminVipFullPrice" placeholder="S/ 30.00" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-xs text-amber-400 font-bold">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="border-t border-slate-800 pt-3">
-                        <span class="text-xs font-bold text-indigo-400 block mb-2">Datos para Sección GRATIS (Sponsors)</span>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-indigo-400 block">Lote de Cuentas GRATIS (Stock Múltiple)</span>
+                            <span id="stockCountBadge" class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800">0 Cuentas</span>
+                        </div>
+                        
                         <div>
                             <label class="text-xs font-semibold text-slate-300 block mb-1">Tipo de Entrega Gratis</label>
                             <select id="adminTypeSelect" onchange="toggleAdminTypeFields()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
@@ -261,25 +340,36 @@
                             </select>
                         </div>
 
-                        <div class="mt-2">
-                            <label class="text-xs font-semibold text-slate-300 block mb-1">Email / Usuario (Gratis)</label>
-                            <input type="text" id="adminNewEmail" placeholder="usuario@correo.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                        <!-- Formulario para agregar una cuenta al lote -->
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 mt-2 space-y-2">
+                            <span class="text-[11px] font-bold text-slate-300 block">Agregar nueva cuenta al lote:</span>
+                            <input type="text" id="adminNewEmail" placeholder="usuario@correo.com" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white">
+                            
+                            <div id="adminPassContainer">
+                                <input type="text" id="adminNewPass" placeholder="Contraseña de la cuenta" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white">
+                            </div>
+
+                            <div id="adminLinkContainer" class="hidden">
+                                <input type="text" id="adminCodeLink" placeholder="https://enlace-para-codigo-tv.com" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white">
+                            </div>
+
+                            <button onclick="addAccountToStockQueue()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 rounded text-xs transition flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Añadir esta cuenta al Lote
+                            </button>
                         </div>
 
-                        <div id="adminPassContainer" class="mt-2">
-                            <label class="text-xs font-semibold text-slate-300 block mb-1">Contraseña (Gratis)</label>
-                            <input type="text" id="adminNewPass" placeholder="ClaveSegura123" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
-                        </div>
-
-                        <div id="adminLinkContainer" class="hidden mt-2">
-                            <label class="text-xs font-semibold text-slate-300 block mb-1">Enlace para Código TV (Gratis)</label>
-                            <input type="text" id="adminCodeLink" placeholder="https://misitio.com/obtener-codigo" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-indigo-500">
+                        <!-- Lista visual de cuentas en inventario -->
+                        <div class="mt-3">
+                            <span class="text-[11px] text-slate-400 block mb-1">Inventario actual en lote:</span>
+                            <div id="adminStockQueueList" class="max-h-32 overflow-y-auto space-y-1 bg-slate-950 p-2 rounded border border-slate-800 text-[11px]">
+                                <!-- Lista cargada por JS -->
+                            </div>
                         </div>
                     </div>
 
                     <div class="flex gap-2 pt-3">
-                        <button onclick="clearCurrentAccount()" class="w-1/3 bg-rose-900/40 hover:bg-rose-800/60 text-rose-300 border border-rose-700/50 font-semibold text-xs py-2.5 rounded-lg transition">
-                            Borrar Gratis
+                        <button onclick="clearCurrentStockQueue()" class="w-1/3 bg-rose-900/40 hover:bg-rose-800/60 text-rose-300 border border-rose-700/50 font-semibold text-xs py-2.5 rounded-lg transition">
+                            Vaciar Lote
                         </button>
                         <button onclick="saveAccountChanges()" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded-lg transition shadow-lg shadow-emerald-600/20">
                             Guardar en la Nube
@@ -295,7 +385,7 @@
         // =========================================================================
         // CONFIGURACIÓN DE JSONBIN.IO (NUBE)
         // =========================================================================
-        const JSONBIN_BIN_ID = "6ae95283ac6210605a677ac5";
+        const JSONBIN_BIN_ID = "6ae94a18ffd5d16053a1192a";
         const JSONBIN_API_KEY = "$2a$10$YrG7ly9QXLW/YOfmz6m4VOMf1ru.orjjTqfovrIoCdScfiQ7QJLdy";
 
         // =========================================================================
@@ -321,23 +411,31 @@
             }
         };
 
-        // Lista Completa de Plataformas (Disney+ actualizado a Premium)
+        // Enlaces de Vídeos Tutoriales
+        let tutorialVideos = {
+            video1: '',
+            video2: ''
+        };
+
+        // Lista Completa de Plataformas
         const defaultAccounts = [
-            { id: 'netflix', name: 'Netflix Premium', icon: 'fa-film', color: 'bg-red-600', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 12.00', vipMode: 'Perfil Privado' },
-            { id: 'disney', name: 'Disney+ Premium', icon: 'fa-wand-magic-sparkles', color: 'bg-blue-600', type: 'code', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 10.00', vipMode: 'Perfil Privado' },
-            { id: 'max', name: 'Max (HBO)', icon: 'fa-tv', color: 'bg-purple-600', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 8.00', vipMode: 'Perfil Privado' },
-            { id: 'spotify', name: 'Spotify Premium', icon: 'fa-music', color: 'bg-emerald-600', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 9.00', vipMode: 'Cuenta Completa' },
-            { id: 'appletv', name: 'Apple TV+', icon: 'fa-apple', color: 'bg-slate-700', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'coming_soon', vipPrice: 'S/ 7.00', vipMode: 'Cuenta Completa' },
-            { id: 'prime', name: 'Prime Video', icon: 'fa-video', color: 'bg-sky-600', type: 'code', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 8.00', vipMode: 'Perfil Privado' },
-            { id: 'crunchyroll', name: 'Crunchyroll Mega Fan', icon: 'fa-ghost', color: 'bg-orange-500', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'coming_soon', vipPrice: 'S/ 6.00', vipMode: 'Cuenta Completa' },
-            { id: 'paramount', name: 'Paramount+', icon: 'fa-mountain', color: 'bg-blue-800', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'coming_soon', vipPrice: 'S/ 6.00', vipMode: 'Perfil Privado' },
-            { id: 'youtube', name: 'YouTube Premium', icon: 'fa-play', color: 'bg-red-500', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'available', vipPrice: 'S/ 7.00', vipMode: 'Cuenta Completa' },
-            { id: 'deezer', name: 'Deezer Premium', icon: 'fa-compact-disc', color: 'bg-pink-600', type: 'full', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'coming_soon', vipPrice: 'S/ 5.00', vipMode: 'Cuenta Completa' },
-            { id: 'starplus', name: 'Star+', icon: 'fa-star', color: 'bg-amber-600', type: 'code', email: '', pass: '', codeLink: '', claimed: false, vipStatus: 'disabled', vipPrice: 'S/ 8.00', vipMode: 'Perfil Privado' }
+            { id: 'netflix', name: 'Netflix Premium', icon: 'fa-film', color: 'bg-red-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 10.00', vipFullPrice: 'S/ 30.00' },
+            { id: 'disney', name: 'Disney+ Premium', icon: 'fa-wand-magic-sparkles', color: 'bg-blue-600', type: 'code', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 10.00', vipFullPrice: 'S/ 28.00' },
+            { id: 'max', name: 'Max (HBO)', icon: 'fa-tv', color: 'bg-purple-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 8.00', vipFullPrice: 'S/ 22.00' },
+            { id: 'spotify', name: 'Spotify Premium', icon: 'fa-music', color: 'bg-emerald-600', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Cuenta Completa', vipProfilePrice: '', vipFullPrice: 'S/ 9.00' },
+            { id: 'appletv', name: 'Apple TV+', icon: 'fa-apple', color: 'bg-slate-700', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: 'S/ 7.00', vipFullPrice: 'S/ 18.00' },
+            { id: 'prime', name: 'Prime Video', icon: 'fa-video', color: 'bg-sky-600', type: 'code', freeStock: [], vipStatus: 'available', vipMode: 'Ambas Opciones', vipProfilePrice: 'S/ 8.00', vipFullPrice: 'S/ 20.00' },
+            { id: 'crunchyroll', name: 'Crunchyroll Mega Fan', icon: 'fa-ghost', color: 'bg-orange-500', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: 'S/ 6.00', vipFullPrice: 'S/ 15.00' },
+            { id: 'paramount', name: 'Paramount+', icon: 'fa-mountain', color: 'bg-blue-800', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Perfil Privado', vipProfilePrice: 'S/ 6.00', vipFullPrice: 'S/ 16.00' },
+            { id: 'youtube', name: 'YouTube Premium', icon: 'fa-play', color: 'bg-red-500', type: 'full', freeStock: [], vipStatus: 'available', vipMode: 'Cuenta Completa', vipProfilePrice: '', vipFullPrice: 'S/ 7.00' },
+            { id: 'deezer', name: 'Deezer Premium', icon: 'fa-compact-disc', color: 'bg-pink-600', type: 'full', freeStock: [], vipStatus: 'coming_soon', vipMode: 'Cuenta Completa', vipProfilePrice: '', vipFullPrice: 'S/ 5.00' },
+            { id: 'starplus', name: 'Star+', icon: 'fa-star', color: 'bg-amber-600', type: 'code', freeStock: [], vipStatus: 'disabled', vipMode: 'Perfil Privado', vipProfilePrice: 'S/ 8.00', vipFullPrice: '' }
         ];
 
         let accounts = defaultAccounts;
         let selectedAccId = null;
+        let selectedVipMode = 'Perfil Privado';
+        let selectedVipPrice = '';
         let activeVipPartner = 'partner1';
         let currentStep = 0;
         let adSeconds = 5;
@@ -353,18 +451,22 @@
         async function loadFromCloud() {
             try {
                 const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-                    headers: {
-                        'X-Master-Key': JSONBIN_API_KEY
-                    }
+                    headers: { 'X-Master-Key': JSONBIN_API_KEY }
                 });
                 if (response.ok) {
                     const data = await response.json();
                     if (data.record) {
-                        if (data.record.accounts) accounts = data.record.accounts;
+                        if (data.record.accounts) {
+                            accounts = data.record.accounts.map(acc => {
+                                if (!acc.freeStock) acc.freeStock = [];
+                                if (!acc.vipMode) acc.vipMode = 'Ambas Opciones';
+                                return acc;
+                            });
+                        }
                         if (data.record.partnersConfig) partnersConfig = data.record.partnersConfig;
+                        if (data.record.tutorialVideos) tutorialVideos = data.record.tutorialVideos;
                     }
                 } else {
-                    // Respaldo local si falla la red
                     loadFromStorage();
                 }
             } catch (error) {
@@ -373,25 +475,29 @@
             }
             renderAccountsGrid();
             renderVipAccountsGrid();
+            renderTutorialVideos();
             populateAdminDropdown();
         }
 
         function loadFromStorage() {
-            const savedAcc = localStorage.getItem('stream_accounts_v7');
-            const savedPar = localStorage.getItem('stream_partners_config_v2');
+            const savedAcc = localStorage.getItem('stream_accounts_v10');
+            const savedPar = localStorage.getItem('stream_partners_config_v5');
+            const savedVid = localStorage.getItem('stream_tutorial_videos_v3');
             if (savedAcc) accounts = JSON.parse(savedAcc);
             if (savedPar) partnersConfig = JSON.parse(savedPar);
+            if (savedVid) tutorialVideos = JSON.parse(savedVid);
         }
 
         async function saveToCloud() {
             const payload = {
                 accounts: accounts,
-                partnersConfig: partnersConfig
+                partnersConfig: partnersConfig,
+                tutorialVideos: tutorialVideos
             };
 
-            // Guardado temporal de respaldo local
-            localStorage.setItem('stream_accounts_v7', JSON.stringify(accounts));
-            localStorage.setItem('stream_partners_config_v2', JSON.stringify(partnersConfig));
+            localStorage.setItem('stream_accounts_v10', JSON.stringify(accounts));
+            localStorage.setItem('stream_partners_config_v5', JSON.stringify(partnersConfig));
+            localStorage.setItem('stream_tutorial_videos_v3', JSON.stringify(tutorialVideos));
 
             try {
                 const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
@@ -404,7 +510,7 @@
                 });
 
                 if (response.ok) {
-                    alert("¡Cambios guardados en la nube y sincronizados con éxito para ti y tu socio!");
+                    alert("¡Cambios guardados en la nube y sincronizados con éxito!");
                 } else {
                     alert("Se guardó localmente, pero hubo un error al sincronizar con JSONBin.");
                 }
@@ -414,33 +520,79 @@
             }
         }
 
-        // Cambio de Pestañas (VIP primero por defecto)
+        // Cambio de Pestañas
         function switchTab(tab) {
             const secFree = document.getElementById('sectionFree');
             const secVip = document.getElementById('sectionVip');
+            const secTut = document.getElementById('sectionTutorials');
+            
             const btnFree = document.getElementById('tabBtnFree');
             const btnVip = document.getElementById('tabBtnVip');
+            const btnTut = document.getElementById('tabBtnTutorials');
+
+            secFree.classList.add('hidden');
+            secVip.classList.add('hidden');
+            secTut.classList.add('hidden');
+
+            btnFree.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white whitespace-nowrap";
+            btnVip.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white whitespace-nowrap";
+            btnTut.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white whitespace-nowrap";
 
             if (tab === 'vip') {
                 secVip.classList.remove('hidden');
-                secFree.classList.add('hidden');
-                
-                btnVip.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20";
-                btnFree.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white";
-            } else {
-                secVip.classList.add('hidden');
+                btnVip.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20 whitespace-nowrap";
+            } else if (tab === 'free') {
                 secFree.classList.remove('hidden');
-
-                btnFree.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-indigo-600 text-white shadow-lg shadow-indigo-600/20";
-                btnVip.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-slate-800 text-slate-400 border border-slate-700 hover:text-white";
+                btnFree.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 whitespace-nowrap";
+            } else if (tab === 'tutorials') {
+                secTut.classList.remove('hidden');
+                btnTut.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20 whitespace-nowrap";
             }
         }
 
-        function isAccountReady(acc) {
-            if (!acc.email || acc.email.trim() === '') return false;
-            if (acc.type === 'full' && (!acc.pass || acc.pass.trim() === '')) return false;
-            if (acc.type === 'code' && (!acc.codeLink || acc.codeLink.trim() === '')) return false;
-            return true;
+        function renderTutorialVideos() {
+            const box1 = document.getElementById('tutVideoBox1');
+            const box2 = document.getElementById('tutVideoBox2');
+
+            if (box1) {
+                if (tutorialVideos.video1 && tutorialVideos.video1.trim() !== '') {
+                    box1.innerHTML = formatVideoEmbed(tutorialVideos.video1);
+                } else {
+                    box1.innerHTML = `<div class="p-6 text-center text-slate-500"><i class="fa-solid fa-play text-2xl mb-2 block"></i>Vídeo tutorial pendiente por el Administrador.</div>`;
+                }
+            }
+
+            if (box2) {
+                if (tutorialVideos.video2 && tutorialVideos.video2.trim() !== '') {
+                    box2.innerHTML = formatVideoEmbed(tutorialVideos.video2);
+                } else {
+                    box2.innerHTML = `<div class="p-6 text-center text-slate-500"><i class="fa-solid fa-play text-2xl mb-2 block"></i>Vídeo tutorial pendiente por el Administrador.</div>`;
+                }
+            }
+        }
+
+        function formatVideoEmbed(url) {
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                let embedUrl = url;
+                if (url.includes('watch?v=')) {
+                    embedUrl = url.replace('watch?v=', 'embed/');
+                } else if (url.includes('youtu.be/')) {
+                    embedUrl = url.replace('youtu.be/', 'youtube.com/embed/');
+                }
+                return `<iframe src="${embedUrl}" class="w-full h-full border-0" allowfullscreen></iframe>`;
+            } else {
+                return `<video src="${url}" controls class="w-full h-full object-cover"></video>`;
+            }
+        }
+
+        function getAvailableFreeItem(acc) {
+            if (!acc.freeStock || acc.freeStock.length === 0) return null;
+            return acc.freeStock.find(item => !item.claimed) || null;
+        }
+
+        function getFreeStockCount(acc) {
+            if (!acc.freeStock) return 0;
+            return acc.freeStock.filter(item => !item.claimed).length;
         }
 
         // Renderizar Cuentas Gratis
@@ -453,39 +605,31 @@
                 card.className = `glass-card p-5 rounded-2xl flex flex-col justify-between hover:border-slate-500 transition duration-300`;
                 const typeLabel = acc.type === 'code' ? 'Solo Código / TV' : 'Cuenta Completa';
                 
-                const ready = isAccountReady(acc);
+                const availableCount = getFreeStockCount(acc);
+                const nextItem = getAvailableFreeItem(acc);
+                
                 let statusBadge = '';
                 let btnHtml = '';
 
-                if (!ready) {
+                if (availableCount > 0 && nextItem) {
                     statusBadge = `
-                        <span class="text-xs text-amber-400 flex items-center">
-                            <span class="w-2 h-2 rounded-full bg-amber-400 mr-1.5"></span>
-                            Pendiente
+                        <span class="text-xs text-emerald-400 font-bold flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
+                            ${availableCount} ${availableCount === 1 ? 'Cuenta Disponible' : 'Cuentas Disponibles'}
                         </span>`;
                     btnHtml = `
-                        <button disabled class="w-full bg-slate-800/60 text-slate-500 cursor-not-allowed font-semibold py-2 rounded-xl text-xs">
-                            Esperando Cuenta
+                        <button onclick="selectAccount('${acc.id}')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 rounded-xl text-xs transition shadow-md shadow-indigo-600/20">
+                            Obtener Cuenta Gratis
                         </button>`;
-                } else if (acc.claimed) {
+                } else {
                     statusBadge = `
                         <span class="text-xs text-rose-400 flex items-center">
                             <span class="w-2 h-2 rounded-full bg-rose-400 mr-1.5"></span>
-                            Agotada
+                            Agotadas (0 Disp.)
                         </span>`;
                     btnHtml = `
                         <button onclick="selectAccount('${acc.id}')" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2 rounded-xl text-xs transition">
                             Ver Estado
-                        </button>`;
-                } else {
-                    statusBadge = `
-                        <span class="text-xs text-emerald-400 flex items-center">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
-                            Disponible
-                        </span>`;
-                    btnHtml = `
-                        <button onclick="selectAccount('${acc.id}')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 rounded-xl text-xs transition shadow-md shadow-indigo-600/20">
-                            Obtener Cuenta
                         </button>`;
                 }
 
@@ -520,7 +664,7 @@
                 card.className = `glass-card p-5 rounded-2xl flex flex-col justify-between hover:border-amber-500/50 transition duration-300 border-amber-500/10`;
 
                 let statusHtml = '';
-                let btnHtml = '';
+                let optionsButtonsHtml = '';
 
                 if (acc.vipStatus === 'available') {
                     statusHtml = `
@@ -528,54 +672,72 @@
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
                             Stock Disponible
                         </span>`;
-                    btnHtml = `
-                        <button onclick="openVipBuyModal('${acc.id}')" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold py-2.5 rounded-xl text-xs transition shadow-md shadow-amber-500/20 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-cart-shopping"></i> Comprar Ahora (${acc.vipPrice})
-                        </button>`;
+                    
+                    let profileBtn = '';
+                    let fullBtn = '';
+
+                    const showProfile = (acc.vipMode === 'Perfil Privado' || acc.vipMode === 'Ambas Opciones') && acc.vipProfilePrice && acc.vipProfilePrice.trim() !== '';
+                    const showFull = (acc.vipMode === 'Cuenta Completa' || acc.vipMode === 'Ambas Opciones') && acc.vipFullPrice && acc.vipFullPrice.trim() !== '';
+
+                    if (showProfile) {
+                        profileBtn = `
+                            <button onclick="openVipBuyModal('${acc.id}', 'Perfil Privado', '${acc.vipProfilePrice}')" class="w-full bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold py-2 rounded-xl text-xs transition flex justify-between items-center px-3">
+                                <span><i class="fa-solid fa-user text-[10px] mr-1"></i> Perfil Privado</span>
+                                <span class="font-mono text-amber-400 font-extrabold">${acc.vipProfilePrice}</span>
+                            </button>`;
+                    }
+
+                    if (showFull) {
+                        fullBtn = `
+                            <button onclick="openVipBuyModal('${acc.id}', 'Cuenta Completa', '${acc.vipFullPrice}')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-2 rounded-xl text-xs transition flex justify-between items-center px-3 shadow-md shadow-amber-500/20">
+                                <span><i class="fa-solid fa-house text-[10px] mr-1"></i> Cuenta Completa</span>
+                                <span class="font-mono text-slate-950 font-black">${acc.vipFullPrice}</span>
+                            </button>`;
+                    }
+
+                    optionsButtonsHtml = `
+                        <div class="space-y-2 mt-3">
+                            ${profileBtn}
+                            ${fullBtn}
+                        </div>`;
+
                 } else {
                     statusHtml = `
                         <span class="text-xs text-amber-400 font-semibold flex items-center">
                             <span class="w-2 h-2 rounded-full bg-amber-400 mr-1.5"></span>
                             Muy Pronto
                         </span>`;
-                    btnHtml = `
-                        <button disabled class="w-full bg-slate-800/80 text-slate-500 cursor-not-allowed font-semibold py-2.5 rounded-xl text-xs">
+                    optionsButtonsHtml = `
+                        <button disabled class="w-full bg-slate-800/80 text-slate-500 cursor-not-allowed font-semibold py-2.5 rounded-xl text-xs mt-3">
                             Próximamente en Stock
                         </button>`;
                 }
 
                 card.innerHTML = `
                     <div>
-                        <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center space-x-3">
                                 <div class="${acc.color} w-10 h-10 rounded-xl flex items-center justify-center text-white">
                                     <i class="fa-solid ${acc.icon}"></i>
                                 </div>
                                 <div>
                                     <h3 class="font-bold text-white text-base">${acc.name}</h3>
-                                    <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded font-semibold">${acc.vipMode}</span>
+                                    ${statusHtml}
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between my-3 bg-slate-900/60 border border-slate-800 p-2.5 rounded-xl">
-                            <div>
-                                <span class="text-[10px] text-slate-400 block">Precio VIP</span>
-                                <span class="text-lg font-black text-amber-400 font-mono">${acc.vipPrice}</span>
-                            </div>
-                            <div class="text-right">
-                                ${statusHtml}
-                            </div>
-                        </div>
                     </div>
-                    ${btnHtml}
+                    ${optionsButtonsHtml}
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // MODAL DE COMPRA VIP (CON SELECCIÓN DE SOCIO 1 Y SOCIO 2)
-        function openVipBuyModal(accId) {
+        // MODAL DE COMPRA VIP
+        function openVipBuyModal(accId, mode, price) {
             selectedAccId = accId;
+            selectedVipMode = mode;
+            selectedVipPrice = price;
             activeVipPartner = 'partner1';
             renderVipModalContent();
             
@@ -596,7 +758,7 @@
             const pData = partnersConfig[activeVipPartner] || partnersConfig.partner1;
             const container = document.getElementById('vipBuyContent');
 
-            const wpText = encodeURIComponent(`Hola ${pData.name}! Acabo de hacer el pago para la cuenta VIP de *${acc.name}* (${acc.vipMode}) por el precio de *${acc.vipPrice}*. Adjunto mi comprobante y número de operación para recibir los accesos.`);
+            const wpText = encodeURIComponent(`Hola ${pData.name}! Acabo de hacer el pago para la cuenta VIP de *${acc.name}* (${selectedVipMode}) por el precio de *${selectedVipPrice}*. Adjunto mi comprobante y número de operación para recibir los accesos.`);
             const wpUrl = `https://wa.me/${pData.wpPhone.replace(/[^0-9]/g, '')}?text=${wpText}`;
 
             const isP1 = activeVipPartner === 'partner1';
@@ -610,7 +772,7 @@
                     
                     <div>
                         <h2 class="text-xl font-bold text-white">${acc.name}</h2>
-                        <p class="text-xs text-slate-400 font-mono">Modalidad: ${acc.vipMode} | Precio: <strong class="text-amber-400">${acc.vipPrice}</strong></p>
+                        <p class="text-xs text-slate-400 font-mono">Modalidad: <strong class="text-slate-200">${selectedVipMode}</strong> | Precio: <strong class="text-amber-400">${selectedVipPrice}</strong></p>
                     </div>
 
                     <!-- SELECTOR DE SOCIO 1 O SOCIO 2 -->
@@ -671,8 +833,9 @@
             selectedAccId = id;
             currentStep = 0;
             const acc = accounts.find(a => a.id === id);
+            const nextItem = getAvailableFreeItem(acc);
 
-            if (acc.claimed) {
+            if (!nextItem) {
                 showClaimedModal(acc);
             } else {
                 showStepModal(acc);
@@ -683,13 +846,18 @@
 
         function showStepModal(acc) {
             const container = document.getElementById('modalContent');
+            const availableCount = getFreeStockCount(acc);
+
             container.innerHTML = `
                 <div class="text-center space-y-4">
                     <div class="${acc.color} w-14 h-14 rounded-2xl flex items-center justify-center text-white mx-auto text-2xl shadow-lg">
                         <i class="fa-solid ${acc.icon}"></i>
                     </div>
-                    <h2 class="text-xl font-bold text-white">Reclamar ${acc.name}</h2>
-                    <p class="text-xs text-slate-400">Completa la verificación viendo los 3 anuncios sponsor para desbloquear los accesos.</p>
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Reclamar ${acc.name}</h2>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-semibold border border-emerald-500/30">Lote activo: ${availableCount} disponibles</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Completa la verificación viendo los 3 anuncios sponsor para desbloquear los accesos de esta cuenta.</p>
                     
                     <!-- Pasos Progreso -->
                     <div class="flex justify-center items-center space-x-2 my-4">
@@ -743,10 +911,11 @@
 
         function finishVerification(acc) {
             const container = document.getElementById('modalContent');
+            const itemToClaim = getAvailableFreeItem(acc);
 
-            if (!acc.claimed) {
-                acc.claimed = true;
-                saveToCloud(); // Sincroniza el estado de reclamado en la nube
+            if (itemToClaim) {
+                itemToClaim.claimed = true;
+                saveToCloud();
                 renderAccountsGrid();
 
                 let rewardDetails = '';
@@ -755,11 +924,11 @@
                         <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-left space-y-2">
                             <div>
                                 <span class="text-[10px] uppercase text-slate-500 font-bold block">Correo de Acceso</span>
-                                <span class="text-sm font-mono text-emerald-400 select-all font-bold">${acc.email}</span>
+                                <span class="text-sm font-mono text-emerald-400 select-all font-bold">${itemToClaim.email}</span>
                             </div>
                             <div class="pt-2 border-t border-slate-800">
                                 <span class="text-[10px] uppercase text-slate-500 font-bold block mb-1">Generar Código TV / Pin</span>
-                                <a href="${acc.codeLink}" target="_blank" class="block text-center bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg text-xs transition">
+                                <a href="${itemToClaim.codeLink}" target="_blank" class="block text-center bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg text-xs transition">
                                     <i class="fa-solid fa-key"></i> Obtener Código Ahora
                                 </a>
                             </div>
@@ -769,11 +938,11 @@
                         <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-left space-y-2 font-mono">
                             <div>
                                 <span class="text-[10px] uppercase text-slate-500 font-bold block font-sans">Correo</span>
-                                <span class="text-sm text-emerald-400 select-all font-bold">${acc.email}</span>
+                                <span class="text-sm text-emerald-400 select-all font-bold">${itemToClaim.email}</span>
                             </div>
                             <div>
                                 <span class="text-[10px] uppercase text-slate-500 font-bold block font-sans">Contraseña</span>
-                                <span class="text-sm text-emerald-400 select-all font-bold">${acc.pass}</span>
+                                <span class="text-sm text-emerald-400 select-all font-bold">${itemToClaim.pass}</span>
                             </div>
                         </div>`;
                 }
@@ -784,7 +953,7 @@
                             <i class="fa-solid fa-trophy"></i>
                         </div>
                         <h2 class="text-xl font-bold text-white">¡Felicidades! Ganaste la cuenta</h2>
-                        <p class="text-xs text-slate-400">Eres el primero en completar los anuncios. Guarda estos datos inmediatamente:</p>
+                        <p class="text-xs text-slate-400">Eres el primero en completar los anuncios de este lote. Guarda estos datos inmediatamente:</p>
                         ${rewardDetails}
                         <p class="text-[10px] text-amber-400">⚠️ Si sales de esta ventana, no podrás recuperar los datos.</p>
                     </div>
@@ -801,11 +970,11 @@
                     <div class="w-14 h-14 bg-rose-500/20 border border-rose-500/40 rounded-full flex items-center justify-center text-rose-400 mx-auto text-2xl">
                         <i class="fa-solid fa-clock"></i>
                     </div>
-                    <h2 class="text-xl font-bold text-white">¡Muy tarde! Otro usuario la ganó</h2>
-                    <p class="text-xs text-slate-400">Alguien completó los 3 anuncios unos segundos antes que tú y reclamó la cuenta de <strong>${acc.name}</strong>.</p>
+                    <h2 class="text-xl font-bold text-white">¡Lote Agotado!</h2>
+                    <p class="text-xs text-slate-400">Todas las cuentas gratuitas asignadas para <strong>${acc.name}</strong> ya fueron reclamadas por otros usuarios.</p>
                     
                     <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-                        <p class="text-xs text-amber-400 font-semibold mb-1">💡 ¿Quieres tu cuenta asegurada sin competir?</p>
+                        <p class="text-xs text-amber-400 font-semibold mb-1">💡 ¿Quieres tu cuenta asegurada sin esperar?</p>
                         <p class="text-[11px] text-slate-400">Puedes comprar tu pantalla o cuenta completa en nuestra tienda VIP por un precio económico.</p>
                     </div>
 
@@ -839,6 +1008,10 @@
                 document.getElementById('adminLogin').classList.add('hidden');
                 document.getElementById('adminPanel').classList.remove('hidden');
 
+                // Cargar datos Vídeos Tutoriales
+                document.getElementById('adminVideo1Url').value = tutorialVideos.video1 || '';
+                document.getElementById('adminVideo2Url').value = tutorialVideos.video2 || '';
+
                 // Cargar datos Socio 1
                 document.getElementById('adminPartner1Name').value = partnersConfig.partner1.name || 'Socio 1';
                 document.getElementById('adminPartner1Wp').value = partnersConfig.partner1.wpPhone || '';
@@ -859,7 +1032,6 @@
             }
         }
 
-        // Subir imagen QR desde archivos locales
         function uploadQrImage(partnerNum) {
             const fileInput = document.getElementById(`adminPartner${partnerNum}QrFile`);
             const file = fileInput.files[0];
@@ -889,17 +1061,103 @@
             const acc = accounts.find(a => a.id === selectedId);
 
             if (acc) {
-                document.getElementById('adminTypeSelect').value = acc.type;
-                document.getElementById('adminNewEmail').value = acc.email || '';
-                document.getElementById('adminNewPass').value = acc.pass || '';
-                document.getElementById('adminCodeLink').value = acc.codeLink || '';
-                
+                document.getElementById('adminTypeSelect').value = acc.type || 'full';
+                document.getElementById('adminNewEmail').value = '';
+                document.getElementById('adminNewPass').value = '';
+                document.getElementById('adminCodeLink').value = '';
+
                 // VIP
                 document.getElementById('adminVipStatus').value = acc.vipStatus || 'available';
-                document.getElementById('adminVipPrice').value = acc.vipPrice || 'S/ 10.00';
-                document.getElementById('adminVipMode').value = acc.vipMode || 'Perfil Privado';
+                document.getElementById('adminVipMode').value = acc.vipMode || 'Ambas Opciones';
+                document.getElementById('adminVipProfilePrice').value = acc.vipProfilePrice || '';
+                document.getElementById('adminVipFullPrice').value = acc.vipFullPrice || '';
 
+                renderAdminStockQueueList(acc);
                 toggleAdminTypeFields();
+            }
+        }
+
+        function renderAdminStockQueueList(acc) {
+            const container = document.getElementById('adminStockQueueList');
+            const badge = document.getElementById('stockCountBadge');
+            
+            if (!acc.freeStock) acc.freeStock = [];
+            badge.innerText = `${acc.freeStock.length} Cuentas`;
+
+            if (acc.freeStock.length === 0) {
+                container.innerHTML = `<span class="text-slate-500 italic block">No hay cuentas cargadas en el lote.</span>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            acc.freeStock.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center bg-slate-900 p-1.5 rounded border border-slate-800";
+                
+                const statusTag = item.claimed 
+                    ? `<span class="text-rose-400 text-[9px] font-bold">[RECLAMADA]</span>` 
+                    : `<span class="text-emerald-400 text-[9px] font-bold">[DISPONIBLE]</span>`;
+
+                const detail = acc.type === 'code' ? item.codeLink : item.pass;
+
+                div.innerHTML = `
+                    <div class="truncate mr-2">
+                        <span class="text-white font-mono font-semibold">${item.email}</span> 
+                        <span class="text-slate-400 text-[10px]">(${detail})</span>
+                        ${statusTag}
+                    </div>
+                    <button onclick="removeAccountFromQueue(${index})" class="text-rose-400 hover:text-rose-300 px-1">
+                        <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addAccountToStockQueue() {
+            const selectedId = document.getElementById('adminSelectPlatform').value;
+            const acc = accounts.find(a => a.id === selectedId);
+            const email = document.getElementById('adminNewEmail').value.trim();
+            const pass = document.getElementById('adminNewPass').value.trim();
+            const codeLink = document.getElementById('adminCodeLink').value.trim();
+
+            if (!email) {
+                alert("Por favor ingresa al menos un correo o usuario.");
+                return;
+            }
+
+            if (!acc.freeStock) acc.freeStock = [];
+
+            acc.freeStock.push({
+                email: email,
+                pass: pass,
+                codeLink: codeLink,
+                claimed: false
+            });
+
+            document.getElementById('adminNewEmail').value = '';
+            document.getElementById('adminNewPass').value = '';
+            document.getElementById('adminCodeLink').value = '';
+
+            renderAdminStockQueueList(acc);
+        }
+
+        function removeAccountFromQueue(index) {
+            const selectedId = document.getElementById('adminSelectPlatform').value;
+            const acc = accounts.find(a => a.id === selectedId);
+            if (acc && acc.freeStock) {
+                acc.freeStock.splice(index, 1);
+                renderAdminStockQueueList(acc);
+            }
+        }
+
+        function clearCurrentStockQueue() {
+            const selectedId = document.getElementById('adminSelectPlatform').value;
+            const acc = accounts.find(a => a.id === selectedId);
+            if (acc) {
+                acc.freeStock = [];
+                renderAdminStockQueueList(acc);
+                alert("Lote de cuentas vaciado.");
             }
         }
 
@@ -914,25 +1172,11 @@
             }
         }
 
-        function clearCurrentAccount() {
-            const selectedId = document.getElementById('adminSelectPlatform').value;
-            const accIndex = accounts.findIndex(a => a.id === selectedId);
-            
-            if (accIndex !== -1) {
-                accounts[accIndex].email = '';
-                accounts[accIndex].pass = '';
-                accounts[accIndex].codeLink = '';
-                accounts[accIndex].claimed = false;
-
-                saveToCloud();
-                renderAccountsGrid();
-                onAdminPlatformChange();
-
-                alert("Datos GRATIS borrados. Ahora figura como PENDIENTE.");
-            }
-        }
-
         function saveAccountChanges() {
+            // Guardar Vídeos
+            tutorialVideos.video1 = document.getElementById('adminVideo1Url').value.trim();
+            tutorialVideos.video2 = document.getElementById('adminVideo2Url').value.trim();
+
             // Guardar config Socio 1
             partnersConfig.partner1.name = document.getElementById('adminPartner1Name').value.trim() || 'Socio 1';
             partnersConfig.partner1.wpPhone = document.getElementById('adminPartner1Wp').value.trim();
@@ -949,27 +1193,21 @@
 
             const selectedId = document.getElementById('adminSelectPlatform').value;
             const type = document.getElementById('adminTypeSelect').value;
-            const newEmail = document.getElementById('adminNewEmail').value.trim();
-            const newPass = document.getElementById('adminNewPass').value.trim();
-            const newCodeLink = document.getElementById('adminCodeLink').value.trim();
 
             const accIndex = accounts.findIndex(a => a.id === selectedId);
             if (accIndex !== -1) {
-                // Sección Gratis
                 accounts[accIndex].type = type;
-                accounts[accIndex].email = newEmail;
-                accounts[accIndex].pass = newPass;
-                accounts[accIndex].codeLink = newCodeLink;
-                if (newEmail !== '') accounts[accIndex].claimed = false;
 
                 // Sección VIP
                 accounts[accIndex].vipStatus = document.getElementById('adminVipStatus').value;
-                accounts[accIndex].vipPrice = document.getElementById('adminVipPrice').value.trim();
                 accounts[accIndex].vipMode = document.getElementById('adminVipMode').value;
+                accounts[accIndex].vipProfilePrice = document.getElementById('adminVipProfilePrice').value.trim();
+                accounts[accIndex].vipFullPrice = document.getElementById('adminVipFullPrice').value.trim();
 
-                saveToCloud(); // Sube todo a JSONBin.io instantáneamente
+                saveToCloud();
                 renderAccountsGrid();
                 renderVipAccountsGrid();
+                renderTutorialVideos();
 
                 toggleAdminModal();
             }
